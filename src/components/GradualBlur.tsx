@@ -48,8 +48,8 @@ const getGradientDirection = (position: Position): string =>
 export default function GradualBlur({
   position = 'bottom',
   strength = 2,
-  height = '6rem',
-  divCount = 5,
+  height = '2rem',
+  divCount = 3,
   exponential = false,
   opacity = 1,
   curve = 'linear',
