@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 
+import heroVideo from '../../747eacd9-e251-4c7f-985a-6a96eb404fcd.mp4';
+
 export default function Hero() {
   const trustPoints = [
     'CBR Gecertificeerd',
@@ -11,30 +13,35 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop"
-          alt="Driving lesson"
+        <video
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
           className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
+          aria-label="Hero achtergrond"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/40"></div>
       </div>
 
-      <div className="container-custom relative z-10 pt-20">
-        <div className="max-w-3xl">
+      <div className="container-custom relative z-10 pt-28 lg:pt-32 h-full flex items-center justify-center lg:justify-center">
+        <div className="max-w-3xl w-full lg:flex lg:justify-center lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="w-full"
           >
-            <span className="inline-block py-1 px-4 rounded-full bg-secondary/20 text-secondary font-bold text-sm mb-6 border border-secondary/30">
-              #1 Rijschool in de regio
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
-              Snel en veilig je <span className="text-secondary">rijbewijs</span> halen
-            </h1>
+            {/* Alleen titel in blur-container (op desktop), breedte volgt titel */}
+            <div className="lg:backdrop-blur-xl lg:bg-white/10 lg:rounded-2xl lg:border lg:border-white/20 lg:px-10 lg:py-8 lg:shadow-2xl lg:mb-8 lg:w-fit lg:-translate-x-8">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+                Snel en veilig je <span className="text-secondary">rijbewijs</span> halen
+              </h1>
+            </div>
+
             <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed">
               Bij Rijschool De Expert leer je autorijden op een manier die bij jou past. 
               Met onze ervaren instructeurs en persoonlijke aanpak ben je optimaal voorbereid op je examen.
