@@ -27,7 +27,7 @@ export default function Navbar() {
     <header className="fixed w-full z-50 px-4 pt-4 pointer-events-none">
       <div className="max-w-7xl mx-auto pointer-events-auto">
         {/* Top Trust Bar - aligned with island */}
-        <div className={`bg-primary-dark text-white/90 py-2 transition-all duration-300 overflow-hidden rounded-2xl mb-2 ${scrolled ? 'h-0 opacity-0 mb-0' : 'h-auto opacity-100'}`}>
+        <div className={`bg-primary-dark text-white/90 py-2 transition-all duration-500 ease-in-out overflow-hidden rounded-2xl ${scrolled ? 'max-h-0 opacity-0 mb-0' : 'max-h-14 opacity-100 mb-2'}`}>
           <div className="px-6 flex justify-between items-center text-[11px] font-semibold tracking-wider uppercase">
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
