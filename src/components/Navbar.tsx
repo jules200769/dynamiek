@@ -61,12 +61,8 @@ export default function Navbar() {
 
         {/* Main Navbar Island */}
         <nav 
-          className={`transition-all duration-500 ease-in-out border ${
-            scrolled 
-              ? 'bg-white/90 backdrop-blur-xl shadow-2xl py-2 border-gray-100 rounded-2xl mt-2' 
-              : isOpen 
-                ? 'bg-white py-5 border-transparent shadow-lg rounded-t-2xl'
-                : 'bg-white/10 backdrop-blur-xl py-5 border-white/20 rounded-2xl'
+          className={`transition-all duration-500 ease-in-out bg-gradient-to-r from-primary via-blue-200 to-white shadow-lg ${
+            scrolled ? 'py-2 rounded-2xl mt-2' : isOpen ? 'py-5 rounded-t-2xl' : 'py-5 rounded-2xl'
           }`}
           style={{ 
             borderRadius: scrolled ? '1rem' : isOpen ? '1rem 1rem 0 0' : '1rem'
@@ -87,10 +83,10 @@ export default function Navbar() {
                   <span className="text-white font-black text-2xl">E</span>
                 </motion.div>
                 <div className="ml-3 flex flex-col">
-                  <span className={`text-xl font-black tracking-tighter leading-none transition-colors duration-300 ${scrolled || isOpen ? 'text-gray-900' : 'text-white'}`}>
+                  <span className="text-xl font-black tracking-tighter leading-none text-white">
                     DE EXPERT
                   </span>
-                  <span className={`text-[9px] font-bold tracking-[0.1em] uppercase leading-none mt-1 transition-colors duration-300 ${scrolled || isOpen ? 'text-primary/70' : 'text-white/70'}`}>
+                  <span className="text-[9px] font-bold tracking-[0.1em] uppercase leading-none mt-1 text-white/80">
                     CBR-erkende rijschool
                   </span>
                 </div>
@@ -104,15 +100,15 @@ export default function Navbar() {
                   <a
                     key={link.name}
                     href={link.href}
-                    className={`text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group ${scrolled || isOpen ? 'text-gray-600 hover:text-primary' : 'text-white/90 hover:text-white'}`}
+                    className="text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group text-gray-600 hover:text-primary"
                   >
                     {link.name}
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${scrolled || isOpen ? 'bg-primary' : 'bg-white'}`}></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary"></span>
                   </a>
                 ))}
               </div>
               
-              <div className={`h-8 w-px mx-2 transition-colors duration-300 ${scrolled || isOpen ? 'bg-gray-100' : 'bg-white/20'}`}></div>
+              <div className="h-8 w-px mx-2 bg-gray-200"></div>
 
               <a 
                 href="#contact" 
