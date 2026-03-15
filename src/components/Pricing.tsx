@@ -52,7 +52,13 @@ export default function Pricing() {
   return (
     <section id="pricing" className="py-24 bg-white">
       <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Tarieven & Pakketten</h2>
           <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
             Transparante prijzen zonder verrassingen
@@ -61,7 +67,7 @@ export default function Pricing() {
             Kies het pakket dat het beste bij jouw ervaring en budget past. 
             Niet zeker? Start met een gratis proefles voor een persoonlijk advies.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (

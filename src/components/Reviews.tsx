@@ -32,7 +32,13 @@ export default function Reviews() {
   return (
     <section className="py-24 bg-gray-50 overflow-hidden">
       <div className="container-custom">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8"
+        >
           <div className="max-w-2xl">
             <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Klantervaringen</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
@@ -51,9 +57,10 @@ export default function Reviews() {
             </div>
             <span className="font-bold text-gray-900">4.8 / 5.0</span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Mobile Carousel / Desktop Grid */}
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-x-visible pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
           {reviews.map((review, index) => (
             <motion.div
               key={review.name}
@@ -61,7 +68,7 @@ export default function Reviews() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col relative"
+              className="min-w-[85vw] sm:min-w-[400px] md:min-w-0 bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col relative snap-center"
             >
               <Quote className="absolute top-6 right-6 text-gray-100" size={40} />
               

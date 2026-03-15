@@ -21,7 +21,13 @@ export default function Contact() {
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row gap-16">
           {/* Contact Info & Regions */}
-          <div className="lg:w-1/2">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:w-1/2"
+          >
             <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Contact & Regio</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8">
               Klaar om te starten?
@@ -78,10 +84,16 @@ export default function Contact() {
                 Staat jouw woonplaats er niet bij? Neem contact op voor de mogelijkheden.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Lead Form */}
-          <div className="lg:w-1/2">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:w-1/2"
+          >
             <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden">
               {submitted ? (
                 <motion.div 
@@ -177,7 +189,7 @@ export default function Contact() {
                 </>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

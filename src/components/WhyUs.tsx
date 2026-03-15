@@ -40,7 +40,13 @@ export default function WhyUs() {
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Left Content */}
-          <div className="lg:w-1/2">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:w-1/2"
+          >
             <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Waarom De Expert?</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 leading-tight">
               De beste begeleiding voor jouw rijbewijs
@@ -71,7 +77,7 @@ export default function WhyUs() {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Image */}
           <div className="lg:w-1/2 relative">

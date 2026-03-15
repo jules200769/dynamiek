@@ -36,13 +36,19 @@ export default function Services() {
   return (
     <section id="services" className="py-24 bg-white">
       <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Onze Opleidingen</h2>
           <p className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
             Kies de opleiding die bij jou past
           </p>
           <div className="w-20 h-1.5 bg-secondary mx-auto rounded-full"></div>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (

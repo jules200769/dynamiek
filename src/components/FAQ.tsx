@@ -32,7 +32,13 @@ export default function FAQ() {
     <section id="faq" className="py-24 bg-white">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row gap-16">
-          <div className="lg:w-1/3">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:w-1/3"
+          >
             <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Veelgestelde Vragen</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
               Alles wat je moet weten
@@ -48,12 +54,16 @@ export default function FAQ() {
                 Bel ons: 085 - 123 45 67
               </a>
             </div>
-          </div>
+          </motion.div>
 
           <div className="lg:w-2/3 space-y-4">
             {faqs.map((faq, index) => (
-              <div 
+              <motion.div 
                 key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className={`border rounded-2xl transition-all duration-300 ${
                   activeIndex === index ? 'border-primary bg-primary/5 shadow-sm' : 'border-gray-100 bg-gray-50'
                 }`}
@@ -84,7 +94,7 @@ export default function FAQ() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
