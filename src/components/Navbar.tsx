@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X, Phone, Star, CheckCircle2, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -15,12 +16,12 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Rijlessen', href: '#services' },
-    { name: 'Tarieven', href: '#pricing' },
-    { name: 'Regio', href: '#regions' },
-    { name: 'FAQ', href: '#faq' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Rijlessen', href: '/rijlessen' },
+    { name: 'Tarieven', href: '/#pricing' },
+    { name: 'Regio', href: '/#regions' },
+    { name: 'FAQ', href: '/#faq' },
+    { name: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -72,7 +73,7 @@ export default function Navbar() {
             <div className="flex justify-between items-center">
             {/* Logo Area */}
             <div className="flex items-center">
-              <a href="#" className="flex items-center group">
+              <Link to="/" className="flex items-center group">
                 <motion.div 
                   animate={{ 
                     scale: scrolled ? 0.85 : 1,
@@ -90,28 +91,28 @@ export default function Navbar() {
                     CBR-erkende rijschool
                   </span>
                 </div>
-              </a>
+              </Link>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-8">
               <div className="flex items-center space-x-7">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
-                    href={link.href}
-                    className="text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group text-gray-600 hover:text-primary"
+                    to={link.href}
+                    className={`text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group ${scrolled || isOpen ? 'text-gray-600 hover:text-primary' : 'text-white/90 hover:text-white'}`}
                   >
                     {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary"></span>
-                  </a>
+                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${scrolled || isOpen ? 'bg-primary' : 'bg-white'}`}></span>
+                  </Link>
                 ))}
               </div>
               
               <div className="h-8 w-px mx-2 bg-gray-200"></div>
 
-              <a 
-                href="#contact" 
+              <Link 
+                to="/#contact" 
                 className="bg-secondary hover:bg-secondary-dark text-white py-3.5 px-8 rounded-xl font-extrabold text-[13px] uppercase tracking-widest transition-all duration-300 shadow-lg shadow-secondary/30 transform hover:-translate-y-1 hover:shadow-xl active:scale-95 flex items-center"
               >
                 Gratis Proefles
@@ -122,17 +123,17 @@ export default function Navbar() {
                 >
                   →
                 </motion.span>
-              </a>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center space-x-4">
-              <a 
-                href="#contact" 
+              <Link 
+                to="/#contact" 
                 className="bg-secondary text-white py-2.5 px-5 rounded-lg font-bold text-[11px] uppercase tracking-wider shadow-md"
               >
                 Proefles
-              </a>
+              </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2.5 rounded-xl text-gray-900 bg-gray-50 border border-gray-100 transition-all duration-300"
@@ -154,23 +155,23 @@ export default function Navbar() {
             >
               <div className="px-6 pt-4 pb-8 space-y-2">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
-                    href={link.href}
+                    to={link.href}
                     onClick={() => setIsOpen(false)}
                     className="block px-4 py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-primary hover:bg-gray-50 rounded-xl transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
                 <div className="pt-6 px-4">
-                  <a
-                    href="#contact"
+                  <Link
+                    to="/#contact"
                     onClick={() => setIsOpen(false)}
                     className="w-full btn-primary py-4 text-sm tracking-[0.2em]"
                   >
                     GRATIS PROEFLES AANVRAGEN
-                  </a>
+                  </Link>
                 </div>
                 <div className="pt-8 flex flex-col items-center space-y-4 text-gray-500">
                   <div className="flex items-center space-x-2 font-bold text-primary">

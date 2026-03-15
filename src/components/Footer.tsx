@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
@@ -39,12 +40,12 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block">Snel naar</h4>
             <ul className="space-y-4 text-blue-100 text-sm">
-              <li><a href="#" className="hover:text-secondary transition-colors">Home</a></li>
-              <li><a href="#services" className="hover:text-secondary transition-colors">Rijlessen</a></li>
-              <li><a href="#pricing" className="hover:text-secondary transition-colors">Tarieven</a></li>
-              <li><a href="#regions" className="hover:text-secondary transition-colors">Regio's</a></li>
-              <li><a href="#faq" className="hover:text-secondary transition-colors">Veelgestelde vragen</a></li>
-              <li><a href="#contact" className="hover:text-secondary transition-colors">Contact</a></li>
+              <li><Link to="/" className="hover:text-secondary transition-colors">Home</Link></li>
+              <li><Link to="/rijlessen" className="hover:text-secondary transition-colors">Rijlessen</Link></li>
+              <li><Link to="/#pricing" className="hover:text-secondary transition-colors">Tarieven</Link></li>
+              <li><Link to="/#regions" className="hover:text-secondary transition-colors">Regio's</Link></li>
+              <li><Link to="/#faq" className="hover:text-secondary transition-colors">Veelgestelde vragen</Link></li>
+              <li><Link to="/#contact" className="hover:text-secondary transition-colors">Contact</Link></li>
             </ul>
           </div>
 
