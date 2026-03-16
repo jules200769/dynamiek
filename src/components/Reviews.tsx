@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 const reviews = [
   {
@@ -66,12 +66,33 @@ const reviews = [
 ];
 
 export default function Reviews() {
-  const trackRef = useRef<HTMLDivElement | null>(null);
+  const loopedReviews = useMemo(() => {
+    const base = [...reviews];
+
+    // Fisher-Yates shuffle
+    for (let i = base.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [base[i], base[j]] = [base[j], base[i]];
+    }
+
+    // voorkom dat dezelfde naam direct naast elkaar staat
+    for (let i = 0; i < base.length - 1; i++) {
+      if (base[i].name === base[i + 1].name) {
+        const swapIndex = base.findIndex(
+          (item, idx) => idx !== i + 1 && item.name !== base[i].name
+        );
+        if (swapIndex !== -1) {
+          [base[i + 1], base[swapIndex]] = [base[swapIndex], base[i + 1]];
+        }
+      }
+    }
+
+    return [...base, ...base];
+  }, []);
 
   return (
     <section className="py-24 bg-gradient-to-b from-gray-300 to-gray-500">
       <div className="container-custom">
-        {/* Header zoals in voorbeeld */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -113,16 +134,21 @@ export default function Reviews() {
                 <Star key={i} size={16} fill="currentColor" />
               ))}
             </div>
+            <span className="ml-2 text-white/80">30 Google reviews</span>
           </div>
         </motion.div>
 
-        {/* Horizontale rij kaarten */}
-        <div className="relative">
-          <div
-            ref={trackRef}
-            className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0"
+        <div className="relative w-full overflow-hidden">
+          <motion.div
+            className="flex gap-6 pb-4 w-full"
+            animate={{ x: ['-50%', '0%'] }}
+            transition={{
+              duration: 40,
+              ease: 'linear',
+              repeat: Infinity
+            }}
           >
-            {reviews.map((review, index) => (
+            {loopedReviews.map((review, index) => (
               <motion.div
                 key={`${review.name}-${index}`}
                 data-review-card
@@ -179,22 +205,9 @@ export default function Reviews() {
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
-        <div className="mt-12 text-center">
-          <a 
-            href="https://www.google.com/search?q=rijschool+dynamiek" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary font-bold hover:text-secondary transition-colors inline-flex items-center"
-          >
-            Bekijk alle 250+ reviews op Google
-            <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="ml-2">
-              →
-            </motion.span>
-          </a>
-        </div>
       </div>
     </section>
   );
