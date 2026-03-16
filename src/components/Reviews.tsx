@@ -175,7 +175,7 @@ export default function Reviews() {
   }, []);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-300 to-gray-500">
+    <section className="py-24 bg-gradient-to-b from-white from-0% via-gray-400 via-[65%] to-white to-100%">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
