@@ -21,7 +21,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col">
       <GradualBlur
         position="bottom"
-        height="7rem"
+        height="3.5rem"
         strength={2}
         divCount={5}
         curve="bezier"
