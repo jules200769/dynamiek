@@ -27,8 +27,14 @@ export default function Navbar() {
   return (
     <header className="fixed w-full z-50 px-4 pt-4 pointer-events-none">
       <div className="max-w-7xl mx-auto pointer-events-auto">
-        {/* Top Trust Bar - aligned with island */}
-        <div className={`bg-primary-dark text-white/90 py-2 transition-all duration-500 ease-in-out overflow-hidden rounded-2xl ${scrolled ? 'max-h-0 opacity-0 mb-0' : 'max-h-14 opacity-100 mb-2'}`}>
+        {/* Top Trust Bar - aligned with island: left blur, right blue gradient */}
+        <div
+          className={`text-white/90 py-2 transition-all duration-500 ease-in-out overflow-hidden rounded-2xl backdrop-blur-xl ${scrolled ? 'max-h-0 opacity-0 mb-0' : 'max-h-14 opacity-100 mb-2'}`}
+          style={{
+            background: 'linear-gradient(to right, rgba(255,255,255,0.35) 0%, rgba(147,197,253,0.55) 50%, rgba(59,130,246,0.85) 100%)',
+            WebkitBackdropFilter: 'blur(24px)',
+          }}
+        >
           <div className="px-6 flex justify-between items-center text-[11px] font-semibold tracking-wider uppercase">
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
@@ -62,11 +68,12 @@ export default function Navbar() {
 
         {/* Main Navbar Island */}
         <nav 
-          className={`transition-all duration-500 ease-in-out bg-gradient-to-r from-primary via-blue-200 to-white shadow-lg ${
+          className={`transition-all duration-500 ease-in-out bg-gradient-to-r from-primary/75 via-blue-200/60 to-white/40 shadow-lg backdrop-blur-xl ${
             scrolled ? 'py-2 rounded-2xl mt-2' : isOpen ? 'py-5 rounded-t-2xl' : 'py-5 rounded-2xl'
           }`}
           style={{ 
-            borderRadius: scrolled ? '1rem' : isOpen ? '1rem 1rem 0 0' : '1rem'
+            borderRadius: scrolled ? '1rem' : isOpen ? '1rem 1rem 0 0' : '1rem',
+            WebkitBackdropFilter: 'blur(24px)',
           }}
         >
           <div className="px-6">

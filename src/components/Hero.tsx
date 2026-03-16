@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ChevronRight, Star } from 'lucide-react';
 
 import heroVideo from '../../747eacd9-e251-4c7f-985a-6a96eb404fcd.mp4';
+import heroVideoMobile from '../../Generated Video March 15, 2026 - 11_21PM.mp4';
 
 export default function Hero() {
   const [agreed, setAgreed] = useState(false);
@@ -24,13 +25,24 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
+        {/* Mobile-only hero video */}
+        <video
+          src={heroVideoMobile}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover md:hidden"
+          aria-label="Hero achtergrond (mobiel)"
+        />
+        {/* Desktop hero video */}
         <video
           src={heroVideo}
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover hidden md:block"
           aria-label="Hero achtergrond"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30"></div>
