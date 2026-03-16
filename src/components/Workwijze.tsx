@@ -1,68 +1,73 @@
 import { motion } from 'motion/react';
-import { Layers, BookOpen } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const modules = [
   'Module 1: Voertuigbediening en beheersing',
   'Module 2: Beheersing eenvoudige verkeerssituaties',
   'Module 3: Beheersing complexe verkeerssituaties',
-  'Module 4: Verantwoorde (rij)gedrag',
+  'Module 4: Verantwoord rijgedrag',
 ];
 
 export default function Workwijze() {
   return (
-    <section id="werkwijze" className="py-24 bg-white">
-      <div className="container-custom">
+    <section id="werkwijze" className="py-24 bg-white overflow-hidden">
+      <div className="flex flex-col lg:flex-row items-stretch gap-10">
+
+        {/* Left card — aligned with container */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="lg:w-1/2 bg-blue-50 rounded-3xl p-10 flex flex-col justify-between
+                     mx-4 sm:mx-6 lg:ml-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:mr-0"
         >
-          <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Werkwijze</h2>
-          <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-            Dynamisch Leren Rijden in stappen
-          </h3>
-          <p className="text-gray-600 leading-relaxed">
-            Met onze methode zetten we in op een gestructureerde en stapsgewijze aanpak. Wij begrijpen dat iedereen op zijn of haar eigen tempo leert en passen onze lessen aan op jouw persoonlijke leerstijl. We maken gebruik van een instructievorderingskaart om het leerproces te optimaliseren.
-          </p>
+          <div>
+            <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Werkwijze</h2>
+            <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">
+              Dynamisch Leren Rijden in stappen
+            </h3>
+            <p className="text-gray-600 leading-relaxed mb-8">
+              Met onze methode zetten we in op een gestructureerde en stapsgewijze aanpak. Wij begrijpen dat iedereen op zijn of haar eigen tempo leert en passen onze lessen aan op jouw persoonlijke leerstijl. We maken gebruik van een instructievorderingskaart om het leerproces te optimaliseren.
+            </p>
+
+            <ul className="space-y-3 mb-10">
+              {modules.map((mod, i) => (
+                <li key={i} className="flex items-center gap-3 text-gray-700">
+                  <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                    {i + 1}
+                  </span>
+                  {mod}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <a href="#contact" className="btn-primary gap-2">
+              Gratis Proefles <ArrowRight size={18} />
+            </a>
+            <a href="#tarieven" className="btn-outline gap-2">
+              Tarieven <ArrowRight size={18} />
+            </a>
+          </div>
         </motion.div>
 
+        {/* Right image — touches right viewport edge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="max-w-2xl mx-auto"
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="lg:w-1/2 rounded-l-3xl overflow-hidden min-h-[420px] mx-4 sm:mx-6 lg:mx-0 lg:rounded-r-none"
         >
-          <div className="flex items-start gap-4 mb-6">
-            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary flex-shrink-0">
-              <Layers size={24} />
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-3">De vier modules</h4>
-              <ul className="space-y-2 text-gray-600">
-                {modules.map((mod, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    {mod}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-100">
-            <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary flex-shrink-0">
-              <BookOpen size={24} />
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-2">Instructievorderingskaart</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                De instructievorderingskaart biedt overzicht van je voortgang en behaalde resultaten. Hierop worden belangrijke leerthema&apos;s en punten van aandacht genoteerd, zodat doelen helder zijn en je gerichter kunt oefenen.
-              </p>
-            </div>
-          </div>
+          <img
+            src="/waarom-achtergrond.jpg"
+            alt="Interieur lesvoertuig Rijschool Dynamiek"
+            className="w-full h-full object-cover"
+          />
         </motion.div>
+
       </div>
     </section>
   );
