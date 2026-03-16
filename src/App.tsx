@@ -17,6 +17,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Workwijze from './components/Workwijze';
 import Rijlessen from './pages/Rijlessen';
+import VeelGesteldeVragen from './pages/VeelGesteldeVragen';
 
 export default function App() {
   return (
@@ -52,6 +53,7 @@ export default function App() {
             }
           />
           <Route path="/rijlessen" element={<Rijlessen />} />
+          <Route path="/veel-gestelde-vragen" element={<VeelGesteldeVragen />} />
         </Routes>
       </main>
       <Footer />

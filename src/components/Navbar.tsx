@@ -7,7 +7,7 @@ const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'Tarievenn', to: '/rijlessen' },
   { label: 'Werkwijze', to: '/#werkwijze' },
-  { label: 'FAQ', to: '/#faq' },
+  { label: 'Veel gestelde vragen', to: '/veel-gestelde-vragen' },
   { label: 'Contact', to: '/#contact' },
 ];
 

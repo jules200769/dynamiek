@@ -45,7 +45,7 @@ export default function Footer() {
               <li><Link to="/#werkwijze" className="hover:text-secondary transition-colors">Werkwijze</Link></li>
               <li><Link to="/#pricing" className="hover:text-secondary transition-colors">Tarieven</Link></li>
               <li><Link to="/#regions" className="hover:text-secondary transition-colors">Regio's</Link></li>
-              <li><Link to="/#faq" className="hover:text-secondary transition-colors">Veelgestelde vragen</Link></li>
+              <li><Link to="/veel-gestelde-vragen" className="hover:text-secondary transition-colors">Veel gestelde vragen</Link></li>
               <li><Link to="/#contact" className="hover:text-secondary transition-colors">Contact</Link></li>
             </ul>
           </div>
