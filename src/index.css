@@ -24,7 +24,7 @@
   }
   
   .btn-primary {
-    @apply bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 inline-flex items-center justify-center;
+    @apply bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center justify-center;
   }
 
   .btn-outline {
@@ -37,5 +37,14 @@
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Navbar GlassSurface: geen rand, minimale onder schaduw */
+  .navbar-glass.glass-surface {
+    border: none;
+    box-shadow: 0 1px 3px rgba(17, 17, 26, 0.04);
+  }
+  .navbar-glass.glass-surface--fallback {
+    border: none;
   }
 }
