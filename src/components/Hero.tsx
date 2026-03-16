@@ -62,19 +62,38 @@ export default function Hero() {
       <div className="container-custom relative z-10 pt-44 lg:pt-48 pb-16 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-          {/* Left: Text content */}
+          {/* Left: Text content — op mobile: h1 → button → GlassSurface (order) */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex-1 text-white"
+            className="flex-1 text-white flex flex-col"
           >
-            {/* Lange witte container rond de reviews boven de titel – GlassSurface effect */}
+            {/* Mobile: h1 eerst (order-1), dan button (order-2), dan GlassSurface (order-3). LG: GlassSurface eerst (lg:order-1), h1 (lg:order-2). */}
+            <h1 className="order-1 lg:order-2 text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 max-w-[605px]">
+              Rijschool <span className="text-secondary">Dynamiek</span>
+            </h1>
+
+            {/* Knop alleen op mobile, tussen h1 en GlassSurface; geen Magnet op mobile */}
+            <div className="order-2 lg:hidden w-full max-w-sm mb-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowTrialForm(true);
+                  setSubmitted(false);
+                }}
+                className="w-full bg-secondary hover:bg-secondary-dark text-white font-extrabold text-lg py-4 md:py-5 rounded-2xl shadow-2xl shadow-secondary/40 transition-transform duration-200 active:scale-95"
+              >
+                Gratis proefles aanvragen
+              </button>
+            </div>
+
+            {/* Lange witte container rond de reviews – GlassSurface effect */}
             <GlassSurface
               width="100%"
               height="auto"
               borderRadius={12}
-              className="w-full max-w-[680px] mb-4 shadow-lg"
+              className="order-3 lg:order-1 w-full max-w-[680px] mb-4 shadow-lg"
               style={{ minHeight: 72 }}
             >
               <div className="w-full px-5 py-4 flex items-center justify-between text-left">
@@ -129,15 +148,11 @@ export default function Hero() {
               </div>
             </GlassSurface>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 max-w-[605px]">
-              Rijschool <span className="text-secondary">Dynamiek</span>
-            </h1>
-
-            <p className="text-base md:text-lg text-gray-200 mb-8 max-w-lg leading-relaxed">
+            <p className="order-4 lg:order-3 text-base md:text-lg text-gray-200 mb-8 max-w-lg leading-relaxed">
               Welkom bij Rijschool Dynamiek! Met onze methode Dynamisch Leren Rijden in stappen bereiden we je optimaal voor op het rijbewijs B. Wij streven ernaar je beter voor te bereiden op het examen, dit in een zo kort mogelijke periode te realiseren, en je veiliger, bewuster en zelfstandiger te laten rijden.
             </p>
 
-            <ul className="space-y-3 mb-10">
+            <ul className="order-4 lg:order-3 space-y-3 mb-10">
               {trustPoints.map((point, index) => (
                 <motion.li
                   key={point}
@@ -154,18 +169,18 @@ export default function Hero() {
 
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-colors text-base"
+              className="order-4 lg:order-3 inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-colors text-base"
             >
               Neem contact op &rsaquo;
             </a>
           </motion.div>
 
-          {/* Right: CTA knop die het proeflesformulier opent */}
+          {/* Right: CTA knop (alleen desktop; op mobile staat de knop tussen h1 en GlassSurface zonder Magnet) */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="w-full lg:w-[450px] flex-shrink-0 flex justify-center"
+            className="hidden lg:flex w-full lg:w-[450px] flex-shrink-0 justify-center"
           >
             <Magnet
               padding={130}

@@ -4,6 +4,7 @@ const Magnet = ({
   children,
   padding = 100,
   disabled = false,
+  disableOnMobile = true,
   magnetStrength = 2,
   activeTransition = 'transform 0.3s ease-out',
   inactiveTransition = 'transform 0.5s ease-in-out',
@@ -13,10 +14,20 @@ const Magnet = ({
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [mobile, setMobile] = useState(false);
   const magnetRef = useRef(null);
 
   useEffect(() => {
-    if (disabled) {
+    const mql = window.matchMedia('(max-width: 1023px)');
+    const update = () => setMobile(mql.matches);
+    update();
+    mql.addEventListener('change', update);
+    return () => mql.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    const effectivelyDisabled = disabled || (disableOnMobile && mobile);
+    if (effectivelyDisabled) {
       setPosition({ x: 0, y: 0 });
       return;
     }
@@ -47,7 +58,7 @@ const Magnet = ({
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [padding, disabled, magnetStrength]);
+  }, [padding, disabled, disableOnMobile, mobile, magnetStrength]);
 
   const transitionStyle = isActive ? activeTransition : inactiveTransition;
 
