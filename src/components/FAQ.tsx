@@ -37,23 +37,13 @@ export default function FAQ() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:w-1/3"
+            className="lg:w-1/3 rounded-3xl overflow-hidden min-h-[420px]"
           >
-            <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Veelgestelde Vragen</h2>
-            <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-              Alles wat je moet weten
-            </h3>
-            <p className="text-gray-600 mb-8">
-              Heb je een andere vraag? Neem gerust contact met ons op via telefoon of e-mail. 
-              We helpen je graag verder.
-            </p>
-            <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
-              <p className="font-bold text-primary mb-2">Nog steeds vragen?</p>
-              <p className="text-sm text-gray-600 mb-4">Onze klantenservice staat voor je klaar.</p>
-              <a href="tel:0648592704" className="text-primary font-bold flex items-center">
-                Bel ons: 06 - 4859 2704
-              </a>
-            </div>
+            <img
+              src="/faq-geslaagd.png"
+              alt="Geslaagde leerling Rijschool Dynamiek Den Bosch"
+              className="w-full h-full object-cover min-h-[420px]"
+            />
           </motion.div>
 
           <div className="lg:w-2/3 space-y-4">

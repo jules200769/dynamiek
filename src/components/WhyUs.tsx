@@ -89,10 +89,9 @@ export default function WhyUs() {
               className="relative z-10 rounded-3xl overflow-hidden shadow-2xl"
             >
               <img
-                src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1964&auto=format&fit=crop"
-                alt="Happy student with instructor"
+                src="/geslaagd2.png"
+                alt="Geslaagde leerling bij Rijschool Dynamiek"
                 className="w-full h-auto"
-                referrerPolicy="no-referrer"
               />
             </motion.div>
             

@@ -13,16 +13,17 @@ export default function Workwijze() {
     <section id="werkwijze" className="py-24 bg-white overflow-hidden">
       <div className="flex flex-col lg:flex-row items-stretch gap-10">
 
-        {/* Left card — aligned with container */}
+        {/* Left — aligned with container */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="lg:w-1/2 bg-blue-50 rounded-3xl p-10 flex flex-col justify-between
+          className="lg:w-1/2 flex flex-col gap-6
                      mx-4 sm:mx-6 lg:ml-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:mr-0"
         >
-          <div>
+          {/* Blue card */}
+          <div className="bg-blue-50 rounded-3xl p-10">
             <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Werkwijze</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">
               Dynamisch Leren Rijden in stappen
@@ -31,7 +32,7 @@ export default function Workwijze() {
               Met onze methode zetten we in op een gestructureerde en stapsgewijze aanpak. Wij begrijpen dat iedereen op zijn of haar eigen tempo leert en passen onze lessen aan op jouw persoonlijke leerstijl. We maken gebruik van een instructievorderingskaart om het leerproces te optimaliseren.
             </p>
 
-            <ul className="space-y-3 mb-10">
+            <ul className="space-y-3">
               {modules.map((mod, i) => (
                 <li key={i} className="flex items-center gap-3 text-gray-700">
                   <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
@@ -43,6 +44,7 @@ export default function Workwijze() {
             </ul>
           </div>
 
+          {/* Buttons below the card */}
           <div className="flex flex-wrap gap-3">
             <a href="#contact" className="btn-primary gap-2">
               Gratis Proefles <ArrowRight size={18} />
