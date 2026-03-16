@@ -110,7 +110,7 @@ export default function Hero() {
                           d="M12 5.4c1.3 0 2.5.4 3.4 1.3l2.5-2.5C16.5 2.6 14.4 1.8 12 1.8 8 1.8 4.6 3.9 3 6.9l3.5 2.7C7.2 7.7 9.1 5.4 12 5.4z"
                         />
                       </svg>
-                      <span>(4,8/5) Google</span>
+                      <span>(5/5) Google</span>
                       <span className="hidden sm:inline">| 30+ reviews</span>
                     </span>
                     <div className="flex items-center gap-1">
