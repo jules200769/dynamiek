@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { ChevronRight, Star } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronRight, Star, X } from 'lucide-react';
 import GlassSurface from '@/components/GlassSurface';
 import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
 
@@ -10,6 +10,7 @@ import heroVideoMobile from '../../Generated Video March 15, 2026 - 11_21PM.mp4'
 export default function Hero() {
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showTrialForm, setShowTrialForm] = useState(false);
 
   const trustPoints = [
     'Betalen per maand of per rijles',
@@ -22,6 +23,13 @@ export default function Hero() {
     e.preventDefault();
     setSubmitted(true);
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.dispatchEvent(
+      new CustomEvent('trialForm:toggle', { detail: { open: showTrialForm } }),
+    );
+  }, [showTrialForm]);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -151,143 +159,182 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* Right: Lead form card */}
+          {/* Right: CTA knop die het proeflesformulier opent */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="w-full lg:w-[450px] flex-shrink-0"
+            className="w-full lg:w-[450px] flex-shrink-0 flex justify-center"
           >
-            <div className="bg-white rounded-2xl shadow-2xl p-7 md:p-8 border border-gray-200">
-              {submitted ? (
-                <div className="text-center py-10">
-                  <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-5">
-                    <Star size={28} className="fill-green-500 text-green-500" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Bedankt voor je aanvraag!</h3>
-                  <p className="text-gray-600 text-sm mb-6">We nemen zo snel mogelijk contact met je op.</p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="text-primary font-semibold hover:underline text-sm"
-                  >
-                    Nog een aanvraag doen
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <h2 className="text-xl font-extrabold text-gray-900 text-center mb-1">
-                    Vraag onze gratis proefles aan!
-                  </h2>
-                  <p className="text-secondary font-semibold text-center text-sm mb-5">
-                    Proefles is gratis i.c.m. een lespakket.
-                  </p>
-
-                  <form onSubmit={handleSubmit} className="space-y-3">
-                    <select
-                      required
-                      defaultValue=""
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                    >
-                      <option value="" disabled className="text-gray-500">Selecteer je opleiding</option>
-                      <option className="text-gray-900">Auto (B)</option>
-                    </select>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        required
-                        type="text"
-                        placeholder="Naam en Achternaam"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                      />
-                      <input
-                        type="date"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        required
-                        type="email"
-                        placeholder="E-mail adres"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                      />
-                      <input
-                        required
-                        type="tel"
-                        placeholder="Telefoonnummer"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        placeholder="Woonplaats"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Postcode"
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                      />
-                    </div>
-
-                    <input
-                      type="text"
-                      placeholder="Adres"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                    />
-
-                    <select
-                      defaultValue=""
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                    >
-                      <option value="" disabled className="text-gray-500">Hoe heb je ons gevonden?</option>
-                      <option className="text-gray-900">Google</option>
-                      <option className="text-gray-900">Social media</option>
-                      <option className="text-gray-900">Via via</option>
-                      <option className="text-gray-900">Anders</option>
-                    </select>
-
-                    <textarea
-                      rows={3}
-                      placeholder="Eventueel bericht (niet verplicht)"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 resize-none"
-                    ></textarea>
-
-                    <label className="flex items-start gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        required
-                        checked={agreed}
-                        onChange={(e) => setAgreed(e.target.checked)}
-                        className="mt-0.5 accent-secondary flex-shrink-0"
-                      />
-                      <span className="text-xs text-gray-600 leading-relaxed">
-                        Ik ga akkoord met de{' '}
-                        <a href="#" className="text-secondary underline hover:text-secondary/80">
-                          algemene voorwaarden
-                        </a>{' '}
-                        en het{' '}
-                        <a href="#" className="text-secondary underline hover:text-secondary/80">
-                          privacybeleid
-                        </a>.
-                        {!agreed && <span className="text-amber-600 ml-1">(Vereist)</span>}
-                      </span>
-                    </label>
-
-                    <button
-                      type="submit"
-                      className="w-full bg-secondary hover:bg-secondary-dark text-white font-bold py-3 rounded-xl transition-colors text-base"
-                    >
-                      Aanvragen
-                    </button>
-                  </form>
-                </>
-              )}
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setShowTrialForm(true);
+                setSubmitted(false);
+              }}
+              className="w-full max-w-sm bg-secondary hover:bg-secondary-dark text-white font-extrabold text-lg py-4 md:py-5 rounded-2xl shadow-2xl shadow-secondary/40 transition-transform duration-200 active:scale-95"
+            >
+              Gratis proefles aanvragen
+            </button>
           </motion.div>
+
+          <AnimatePresence>
+            {showTrialForm && (
+              <motion.div
+                className="fixed inset-0 z-40 flex items-center justify-center px-4 bg-black/40 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowTrialForm(false)}
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: [0.9, 1.02, 1] }}
+                  exit={{ opacity: 0, y: 24, scale: 0.9 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-7 md:p-8 border border-gray-200 relative"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setShowTrialForm(false)}
+                    className="absolute right-4 top-4 rounded-full p-1 text-gray-500 hover:bg-gray-100"
+                    aria-label="Sluit proeflesformulier"
+                  >
+                    <X size={18} />
+                  </button>
+
+                  {submitted ? (
+                    <div className="text-center py-6 mt-2">
+                      <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-5">
+                        <Star size={28} className="fill-green-500 text-green-500" />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Bedankt voor je aanvraag!</h3>
+                      <p className="text-gray-600 text-sm mb-6">We nemen zo snel mogelijk contact met je op.</p>
+                      <button
+                        onClick={() => setSubmitted(false)}
+                        className="text-primary font-semibold hover:underline text-sm"
+                      >
+                        Nog een aanvraag doen
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <h2 className="text-xl font-extrabold text-gray-900 text-center mb-1">
+                        Vraag onze gratis proefles aan!
+                      </h2>
+                      <p className="text-secondary font-semibold text-center text-sm mb-5">
+                        Proefles is gratis i.c.m. een lespakket.
+                      </p>
+
+                      <form onSubmit={handleSubmit} className="space-y-3">
+                        <select
+                          required
+                          defaultValue=""
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                        >
+                          <option value="" disabled className="text-gray-500">Selecteer je opleiding</option>
+                          <option className="text-gray-900">Auto (B)</option>
+                        </select>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <input
+                            required
+                            type="text"
+                            placeholder="Naam en Achternaam"
+                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          />
+                          <input
+                            type="date"
+                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <input
+                            required
+                            type="email"
+                            placeholder="E-mail adres"
+                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          />
+                          <input
+                            required
+                            type="tel"
+                            placeholder="Telefoonnummer"
+                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <input
+                            type="text"
+                            placeholder="Woonplaats"
+                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Postcode"
+                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                          />
+                        </div>
+
+                        <input
+                          type="text"
+                          placeholder="Adres"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                        />
+
+                        <select
+                          defaultValue=""
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                        >
+                          <option value="" disabled className="text-gray-500">Hoe heb je ons gevonden?</option>
+                          <option className="text-gray-900">Google</option>
+                          <option className="text-gray-900">Social media</option>
+                          <option className="text-gray-900">Via via</option>
+                          <option className="text-gray-900">Anders</option>
+                        </select>
+
+                        <textarea
+                          rows={3}
+                          placeholder="Eventueel bericht (niet verplicht)"
+                          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 resize-none"
+                        ></textarea>
+
+                        <label className="flex items-start gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            required
+                            checked={agreed}
+                            onChange={(e) => setAgreed(e.target.checked)}
+                            className="mt-0.5 accent-secondary flex-shrink-0"
+                          />
+                          <span className="text-xs text-gray-600 leading-relaxed">
+                            Ik ga akkoord met de{' '}
+                            <a href="#" className="text-secondary underline hover:text-secondary/80">
+                              algemene voorwaarden
+                            </a>{' '}
+                            en het{' '}
+                            <a href="#" className="text-secondary underline hover:text-secondary/80">
+                              privacybeleid
+                            </a>.
+                            {!agreed && <span className="text-amber-600 ml-1">(Vereist)</span>}
+                          </span>
+                        </label>
+
+                        <button
+                          type="submit"
+                          className="w-full bg-secondary hover:bg-secondary-dark text-white font-bold py-3 rounded-xl transition-colors text-base"
+                        >
+                          Aanvragen
+                        </button>
+                      </form>
+                    </>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </div>

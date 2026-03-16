@@ -5,9 +5,8 @@ import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
 
 const navLinks = [
   { label: 'Home', to: '/' },
-  { label: 'Rijlessen', to: '/rijlessen' },
+  { label: 'Tarievenn', to: '/rijlessen' },
   { label: 'Werkwijze', to: '/#werkwijze' },
-  { label: 'Tarieven', to: '/#pricing' },
   { label: 'FAQ', to: '/#faq' },
   { label: 'Contact', to: '/#contact' },
 ];
@@ -15,6 +14,7 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hideBar, setHideBar] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -28,8 +28,19 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [location.pathname, location.hash]);
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const ev = e as CustomEvent<{ open?: boolean }>;
+      setHideBar(Boolean(ev.detail?.open));
+    };
+    window.addEventListener('trialForm:toggle', handler as EventListener);
+    return () => window.removeEventListener('trialForm:toggle', handler as EventListener);
+  }, []);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 px-4 pt-4 transition-opacity duration-200 ${hideBar ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+    >
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-white/40 bg-white/95 px-4 py-3 backdrop-blur transition-all duration-300 md:px-6 ${
           scrolled ? 'shadow-xl shadow-slate-900/10' : 'shadow-md shadow-slate-900/5'
@@ -65,12 +76,6 @@ export default function Navbar() {
             <Phone size={16} />
             06 4859 2704
           </a>
-          <Link
-            to="/#contact"
-            className="rounded-xl bg-secondary px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition-colors hover:bg-secondary-dark"
-          >
-            Gratis proefles
-          </Link>
         </div>
 
         <button
