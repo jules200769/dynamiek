@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, Star, X } from 'lucide-react';
 import GlassSurface from '@/components/GlassSurface';
+import Magnet from '@/components/Magnet';
 import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
 
 import heroVideo from '../../747eacd9-e251-4c7f-985a-6a96eb404fcd.mp4';
@@ -166,16 +167,23 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="w-full lg:w-[450px] flex-shrink-0 flex justify-center"
           >
-            <button
-              type="button"
-              onClick={() => {
-                setShowTrialForm(true);
-                setSubmitted(false);
-              }}
-              className="w-full max-w-sm bg-secondary hover:bg-secondary-dark text-white font-extrabold text-lg py-4 md:py-5 rounded-2xl shadow-2xl shadow-secondary/40 transition-transform duration-200 active:scale-95"
+            <Magnet
+              padding={130}
+              magnetStrength={5}
+              wrapperClassName="w-full max-w-sm"
+              innerClassName="w-full"
             >
-              Gratis proefles aanvragen
-            </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowTrialForm(true);
+                  setSubmitted(false);
+                }}
+                className="w-full bg-secondary hover:bg-secondary-dark text-white font-extrabold text-lg py-4 md:py-5 rounded-2xl shadow-2xl shadow-secondary/40 transition-transform duration-200 active:scale-95"
+              >
+                Gratis proefles aanvragen
+              </button>
+            </Magnet>
           </motion.div>
 
           <AnimatePresence>

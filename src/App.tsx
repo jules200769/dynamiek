@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import GradualBlur from './components/GradualBlur';
 import Hero from './components/Hero';
+import USPScroller from './components/USPScroller';
 import Services from './components/Services';
 import WhyUs from './components/WhyUs';
 import Pricing from './components/Pricing';
@@ -39,6 +40,7 @@ export default function App() {
             element={
               <>
                 <Hero />
+                <USPScroller />
                 <Services />
                 <Workwijze />
                 <WhyUs />
