@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ChevronRight, Star } from 'lucide-react';
 import GlassSurface from '@/components/GlassSurface';
+import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
 
 import heroVideo from '../../747eacd9-e251-4c7f-985a-6a96eb404fcd.mp4';
 import heroVideoMobile from '../../Generated Video March 15, 2026 - 11_21PM.mp4';
@@ -67,22 +68,55 @@ export default function Hero() {
               className="w-full max-w-[680px] mb-4 shadow-lg"
               style={{ minHeight: 72 }}
             >
-              <div className="w-full px-5 py-4 flex flex-col items-start text-left">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="font-bold text-white text-base">G</span>
-                  <span className="text-white/80 text-sm">(4,8/5) Google | 600+ reviews</span>
+              <div className="w-full px-5 py-4 flex items-center justify-between text-left">
+                <div className="flex items-center gap-4 overflow-visible">
+                  <div className="h-10 flex items-center overflow-visible">
+                    <img
+                      src={LogoDynamiek}
+                      alt="Rijschool Dynamiek"
+                      className="h-24 w-auto -ml-4 drop-shadow-md"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 text-white/80 text-sm whitespace-nowrap">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          fill="#EA4335"
+                          d="M12 10.2v3.7h5.2c-.2 1.2-.9 2.3-1.9 3.1l3.1 2.4c1.8-1.7 2.8-4.1 2.8-6.9 0-.7-.1-1.3-.2-1.9H12z"
+                        />
+                        <path
+                          fill="#34A853"
+                          d="M6.6 14.3l-.8.6-2.5 1.9C4.6 19.9 8 22 12 22c2.4 0 4.5-.8 6-2.1l-3.1-2.4c-.8.5-1.8.8-2.9.8-2.2 0-4.1-1.5-4.8-3.6z"
+                        />
+                        <path
+                          fill="#4A90E2"
+                          d="M4.1 8.8 1.6 6.9C.9 8.1.5 9.5.5 11c0 1.5.4 2.9 1.1 4.1l3.5-2.7c-.2-.7-.3-1.3-.3-2 0-.6.1-1.2.3-1.6z"
+                        />
+                        <path
+                          fill="#FBBC05"
+                          d="M12 5.4c1.3 0 2.5.4 3.4 1.3l2.5-2.5C16.5 2.6 14.4 1.8 12 1.8 8 1.8 4.6 3.9 3 6.9l3.5 2.7C7.2 7.7 9.1 5.4 12 5.4z"
+                        />
+                      </svg>
+                      <span>(4,8/5) Google</span>
+                      <span className="hidden sm:inline">| 30+ reviews</span>
+                    </span>
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={18} className="fill-secondary text-secondary" />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} className="fill-secondary text-secondary" />
-                  ))}
-                  <a
-                    href="#reviews"
-                    className="ml-2 text-sm font-semibold text-secondary underline underline-offset-2 hover:text-secondary/80 transition-colors"
-                  >
-                    Bekijk hier &rsaquo;
-                  </a>
-                </div>
+                <a
+                  href="https://www.google.com/search?sca_esv=608d6234066b0d5b&biw=1536&bih=730&sxsrf=ANbL-n4_c_piSyPQaey0dUQSxav8hN1pJg:1773661338619&q=Rijschool+Dynamiek&sa=X&ved=2ahUKEwiqnaiwq6STAxXD3wIHHQfODrcQkc0JKAB6BAgMEAE&ictx=0"
+                  className="ml-4 text-sm font-semibold text-secondary underline underline-offset-2 hover:text-secondary/80 transition-colors whitespace-nowrap"
+                >
+                  Bekijk hier &rsaquo;
+                </a>
               </div>
             </GlassSurface>
 
