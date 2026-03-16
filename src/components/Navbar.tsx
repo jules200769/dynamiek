@@ -79,26 +79,12 @@ export default function Navbar() {
         >
           <div className="px-6">
             <div className="flex justify-between items-center">
-            {/* Logo Area */}
+            {/* Logo Area (tekst i.p.v. afbeelding) */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center group">
-                <motion.div 
-                  animate={{ 
-                    scale: scrolled ? 0.85 : 1,
-                    rotate: scrolled ? 5 : 0
-                  }}
-                  className="w-11 h-11 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-6 transition-transform duration-500"
-                >
-                  <span className="text-white font-black text-2xl">D</span>
-                </motion.div>
-                <div className="ml-3 flex flex-col">
-                  <span className="text-xl font-black tracking-tighter leading-none text-white">
-                    DYNAMIEK
-                  </span>
-                  <span className="text-[9px] font-bold tracking-[0.1em] uppercase leading-none mt-1 text-white/80">
-                    Dynamisch in stappen leren rijden
-                  </span>
-                </div>
+                <span className="text-lg md:text-xl font-extrabold tracking-tight text-white drop-shadow-sm">
+                  Rijschool <span className="text-secondary">Dynamiek</span>
+                </span>
               </Link>
             </div>
 
