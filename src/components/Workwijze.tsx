@@ -10,7 +10,7 @@ const modules = [
 
 export default function Workwijze() {
   return (
-    <section id="werkwijze" className="py-24 bg-white overflow-hidden">
+    <section id="werkwijze" className="py-24 bg-[linear-gradient(to_bottom,#0b2648_0%,#0b2648_50%,white_100%)] overflow-hidden">
       <div className="flex flex-col lg:flex-row items-stretch gap-10">
 
         {/* Left — aligned with container */}
@@ -49,7 +49,7 @@ export default function Workwijze() {
             <a href="#contact" className="btn-primary gap-2">
               Gratis Proefles <ArrowRight size={18} />
             </a>
-            <a href="#tarieven" className="btn-outline gap-2">
+            <a href="#tarieven" className="btn-outline border-white text-white hover:bg-white hover:text-[#0b2648] gap-2">
               Tarieven <ArrowRight size={18} />
             </a>
           </div>

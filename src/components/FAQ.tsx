@@ -29,7 +29,7 @@ export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 bg-white">
+    <section id="faq" className="py-24 bg-[linear-gradient(to_bottom,white_0%,white_45%,#172554_100%)]">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row gap-16">
           <motion.div 

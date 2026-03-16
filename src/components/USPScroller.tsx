@@ -15,7 +15,7 @@ export default function USPScroller() {
   const loopItems = useMemo(() => [...uspItems, ...uspItems], []);
 
   return (
-    <section className="bg-[#0b2648] text-white py-3 border-y border-white/5 overflow-hidden">
+    <section className="bg-[#0b2648] text-white py-3 border-y border-yellow-400 overflow-hidden">
       <div className="relative">
         <div className="flex whitespace-nowrap animate-[usp-marquee_35s_linear_infinite]">
           {loopItems.map((item, index) => (

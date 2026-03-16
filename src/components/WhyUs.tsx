@@ -36,7 +36,7 @@ const benefits = [
 
 export default function WhyUs() {
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-24 bg-white">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Left Content */}
