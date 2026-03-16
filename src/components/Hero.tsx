@@ -10,10 +10,10 @@ export default function Hero() {
   const [submitted, setSubmitted] = useState(false);
 
   const trustPoints = [
-    'Betalen in termijnen',
+    'Betalen per maand of per rijles',
     'Examengerichte rijlessen',
     'CBR erkende rijschool',
-    '10+ jaar ervaring',
+    'Flexibele lestijden',
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -78,14 +78,11 @@ export default function Hero() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 max-w-[605px]">
-              Rijschool <span className="text-secondary">De Expert</span>
+              Rijschool <span className="text-secondary">Dynamiek</span>
             </h1>
 
             <p className="text-base md:text-lg text-gray-200 mb-8 max-w-lg leading-relaxed">
-              Als CBR-erkende rijschool zorgen wij ervoor dat je optimaal bent voorbereid op het
-              CBR-praktijkexamen. Onze examengerichte aanpak garandeert dat je snel en effectief
-              je rijbewijs haalt. Bij Rijschool De Expert volg je rijles in een moderne lesauto,
-              onder begeleiding van ervaren instructeurs.
+              Welkom bij Rijschool Dynamiek! Met onze methode Dynamisch Leren Rijden in stappen bereiden we je optimaal voor op het rijbewijs B. Wij streven ernaar je beter voor te bereiden op het examen, dit in een zo kort mogelijke periode te realiseren, en je veiliger, bewuster en zelfstandiger te laten rijden.
             </p>
 
             <ul className="space-y-3 mb-10">
@@ -150,9 +147,6 @@ export default function Hero() {
                     >
                       <option value="" disabled className="text-gray-900">Selecteer je opleiding</option>
                       <option className="text-gray-900">Auto (B)</option>
-                      <option className="text-gray-900">Motor (A)</option>
-                      <option className="text-gray-900">Scooter (AM)</option>
-                      <option className="text-gray-900">Aanhanger (BE)</option>
                     </select>
 
                     <div className="grid grid-cols-2 gap-3">

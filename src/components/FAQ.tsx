@@ -17,11 +17,11 @@ const faqs = [
   },
   {
     question: 'Wat houdt een gratis proefles precies in?',
-    answer: 'Tijdens de proefles maak je kennis met de instructeur en de auto. We kijken naar je huidige vaardigheden en aan het eind krijg je een eerlijk advies over welk pakket het beste bij je past. De les is geheel vrijblijvend.'
+    answer: 'De proefles kost € 50,00 en is gratis bij afname van een lespakket. Tijdens de proefles maak je kennis met de instructeur en de auto. We kijken naar je huidige vaardigheden en geven een eerlijk advies over welk pakket het beste bij je past. Mail of bel voor een vrijblijvende proefles.'
   },
   {
     question: 'Kan ik mijn pakket in termijnen betalen?',
-    answer: 'Ja, bij De Expert is het mogelijk om je lespakket in 2, 3 of zelfs 4 termijnen te betalen. Zo blijft het behalen van je rijbewijs voor iedereen betaalbaar.'
+    answer: 'Ja! Bij Rijschool Dynamiek kan je per maand en zelfs per rijles betalen. Bij de meeste rijscholen moet je alles in één keer betalen, bij ons niet. Zo blijft het behalen van je rijbewijs voor iedereen betaalbaar.'
   }
 ];
 
@@ -50,8 +50,8 @@ export default function FAQ() {
             <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
               <p className="font-bold text-primary mb-2">Nog steeds vragen?</p>
               <p className="text-sm text-gray-600 mb-4">Onze klantenservice staat voor je klaar.</p>
-              <a href="tel:0851234567" className="text-primary font-bold flex items-center">
-                Bel ons: 085 - 123 45 67
+              <a href="tel:0648592704" className="text-primary font-bold flex items-center">
+                Bel ons: 06 - 4859 2704
               </a>
             </div>
           </motion.div>

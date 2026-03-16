@@ -10,7 +10,7 @@ const reviews = [
   },
   {
     name: 'Thomas de Boer',
-    text: 'Fijne rijschool met moderne auto’s. De planning was altijd flexibel, wat perfect was naast mijn studie. Echt een aanrader!',
+    text: 'Fijne rijschool met moderne auto. De planning was altijd flexibel, wat perfect was naast mijn studie. Echt een aanrader!',
     rating: 5,
     date: '1 maand geleden'
   },
@@ -22,7 +22,7 @@ const reviews = [
   },
   {
     name: 'Mark Janssen',
-    text: 'Top begeleiding voor mijn motorrijbewijs. De instructeur rijdt zelf ook mee en geeft super handige tips via de porto.',
+    text: 'Top begeleiding voor mijn rijbewijs. De instructeur legde alles helder uit en de stapsgewijze aanpak werkte perfect voor mij.',
     rating: 5,
     date: '4 maanden geleden'
   }
@@ -97,7 +97,7 @@ export default function Reviews() {
 
         <div className="mt-16 text-center">
           <a 
-            href="https://google.com" 
+            href="https://www.google.com/search?q=rijschool+dynamiek" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-primary font-bold hover:text-secondary transition-colors inline-flex items-center"

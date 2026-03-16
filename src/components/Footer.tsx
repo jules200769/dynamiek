@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,13 +12,13 @@ export default function Footer() {
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                <span className="text-primary font-black text-xl">E</span>
+                <span className="text-primary font-black text-xl">D</span>
               </div>
-              <span className="text-xl font-bold tracking-tight">De Expert</span>
+              <span className="text-xl font-bold tracking-tight">Rijschool Dynamiek</span>
             </div>
             <p className="text-blue-200 text-sm leading-relaxed">
-              Rijschool De Expert is al meer dan 15 jaar dé specialist in rijopleidingen. 
-              Wij helpen je snel, veilig en met plezier aan je rijbewijs.
+              Dynamisch in stappen leren rijden. Transparante tarieven, gratis proefles bij pakket, 
+              en betalen per maand of per rijles mogelijk.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
@@ -42,6 +42,7 @@ export default function Footer() {
             <ul className="space-y-4 text-blue-100 text-sm">
               <li><Link to="/" className="hover:text-secondary transition-colors">Home</Link></li>
               <li><Link to="/rijlessen" className="hover:text-secondary transition-colors">Rijlessen</Link></li>
+              <li><Link to="/#werkwijze" className="hover:text-secondary transition-colors">Werkwijze</Link></li>
               <li><Link to="/#pricing" className="hover:text-secondary transition-colors">Tarieven</Link></li>
               <li><Link to="/#regions" className="hover:text-secondary transition-colors">Regio's</Link></li>
               <li><Link to="/#faq" className="hover:text-secondary transition-colors">Veelgestelde vragen</Link></li>
@@ -53,17 +54,16 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-6 border-b border-white/10 pb-2 inline-block">Contact</h4>
             <ul className="space-y-4 text-blue-100 text-sm">
-              <li className="flex items-start space-x-3">
-                <MapPin size={18} className="text-secondary mt-0.5" />
-                <span>Hoofdstraat 123, 1011 AB Amsterdam</span>
-              </li>
               <li className="flex items-center space-x-3">
                 <Phone size={18} className="text-secondary" />
-                <span>085 - 123 45 67</span>
+                <a href="tel:0648592704" className="hover:text-white transition-colors">06 - 4859 2704</a>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={18} className="text-secondary" />
-                <span>info@rijschoolexpert.nl</span>
+                <a href="mailto:info@rijschooldynamiek.nl" className="hover:text-white transition-colors">info@rijschooldynamiek.nl</a>
+              </li>
+              <li className="flex items-center space-x-3">
+                <span className="text-blue-200">KVK: 96330139</span>
               </li>
             </ul>
           </div>
@@ -95,7 +95,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-blue-300">
-          <p>© {currentYear} Rijschool De Expert. Alle rechten voorbehouden.</p>
+          <p>© {currentYear} Rijschool Dynamiek. Alle rechten voorbehouden.</p>
           <div className="flex space-x-6">
             <a href="#" className="hover:text-white transition-colors">Privacybeleid</a>
             <a href="#" className="hover:text-white transition-colors">Algemene Voorwaarden</a>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Send, MapPin, Phone, Mail, Clock, CheckCircle2 } from 'lucide-react';
+import { Send, MapPin, Phone, Mail, Clock, CheckCircle2, Building2 } from 'lucide-react';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -36,21 +36,11 @@ export default function Contact() {
             <div className="space-y-8 mb-12">
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary flex-shrink-0">
-                  <MapPin size={24} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">Ons Kantoor</h4>
-                  <p className="text-gray-600">Hoofdstraat 123, 1011 AB Amsterdam</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary flex-shrink-0">
                   <Phone size={24} />
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900">Telefoon</h4>
-                  <p className="text-gray-600">085 - 123 45 67</p>
+                  <a href="tel:0648592704" className="text-gray-600 hover:text-primary transition-colors">06 - 4859 2704</a>
                 </div>
               </div>
               
@@ -60,7 +50,17 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900">E-mail</h4>
-                  <p className="text-gray-600">info@rijschoolexpert.nl</p>
+                  <a href="mailto:info@rijschooldynamiek.nl" className="text-gray-600 hover:text-primary transition-colors">info@rijschooldynamiek.nl</a>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary flex-shrink-0">
+                  <Building2 size={24} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900">KVK</h4>
+                  <p className="text-gray-600">96330139</p>
                 </div>
               </div>
             </div>
@@ -68,8 +68,11 @@ export default function Contact() {
             <div id="regions">
               <h4 className="font-bold text-gray-900 mb-4 flex items-center">
                 <MapPin className="mr-2 text-primary" size={20} />
-                Wij lessen in:
+                Lesgebied
               </h4>
+              <p className="text-gray-600 mb-4">
+                Wij lessen in de regio. Staat jouw woonplaats er niet bij? Neem contact op voor de mogelijkheden.
+              </p>
               <div className="flex flex-wrap gap-2">
                 {regions.map((region) => (
                   <span 
@@ -80,9 +83,6 @@ export default function Contact() {
                   </span>
                 ))}
               </div>
-              <p className="mt-4 text-sm text-gray-500 italic">
-                Staat jouw woonplaats er niet bij? Neem contact op voor de mogelijkheden.
-              </p>
             </div>
           </motion.div>
 
@@ -158,9 +158,6 @@ export default function Contact() {
                         <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Type Rijbewijs</label>
                         <select className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 outline-none transition-all appearance-none">
                           <option>Auto (B)</option>
-                          <option>Motor (A)</option>
-                          <option>Scooter (AM)</option>
-                          <option>Aanhanger (BE)</option>
                         </select>
                       </div>
                       

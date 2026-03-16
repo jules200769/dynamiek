@@ -9,16 +9,16 @@ const packages = [
     tagline: 'Ideaal om te starten',
     blocks: '5 bloklessen van 100 minuten',
     lessons: '10 rijlessen van 50 minuten',
-    features: ['Snel beginnen'],
+    features: ['Snel beginnen', 'Vaste instructeur', 'Vanaf 16,5 jaar'],
     price: '570,00',
     highlight: false,
   },
   {
-    name: 'Standaard Pakket',
+    name: 'Basis Pakket',
     tagline: 'Meer lessen, meer zekerheid',
     blocks: '10 bloklessen van 100 minuten',
     lessons: '20 rijlessen van 50 minuten',
-    features: ['Snel beginnen', 'Een gratis herhalingsles (50 minuten)', 'Praktijkexamen'],
+    features: ['Snel beginnen', 'Vaste instructeur', 'Vanaf 16,5 jaar', 'Een gratis herhalingsles (50 minuten)', 'Praktijkexamen'],
     price: '1.533,50',
     highlight: false,
   },
@@ -27,16 +27,16 @@ const packages = [
     tagline: 'Populair bij onze leerlingen',
     blocks: '13 bloklessen van 100 minuten',
     lessons: '26 rijlessen van 50 minuten',
-    features: ['Snel beginnen', 'Een gratis herhalingsles (50 minuten)', 'Praktijkexamen'],
+    features: ['Snel beginnen', 'Vaste instructeur', 'Vanaf 16,5 jaar', 'Een gratis herhalingsles (50 minuten)', 'Praktijkexamen'],
     price: '1.875,00',
     highlight: true,
   },
   {
-    name: 'Uitgebreid Pakket',
+    name: 'Complete Pakket',
     tagline: 'Ruim voldoende oefening',
     blocks: '15 bloklessen van 100 minuten',
     lessons: '30 rijlessen van 50 minuten',
-    features: ['Snel beginnen', 'Een gratis herhalingsles (50 minuten)', 'Praktijkexamen'],
+    features: ['Snel beginnen', 'Vaste instructeur', 'Vanaf 16,5 jaar', 'Een gratis herhalingsles (50 minuten)', 'Praktijkexamen'],
     price: '2.103,50',
     highlight: false,
     mostChosen: true,
@@ -63,6 +63,8 @@ const packages = [
     lessons: '12 rijlessen van 50 minuten',
     features: [
       'Snel beginnen',
+      'Vaste instructeur',
+      'Vanaf 16,5 jaar',
       'Een gratis herhalingsles (50 minuten)',
       'Één gratis Praktijk (Her)Examen',
     ],
@@ -694,8 +696,14 @@ export default function Rijlessen() {
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold mb-3">
               Rijlessen die bij jou passen
             </h2>
-            <p className="text-blue-100 text-base md:text-lg">
+            <p className="text-blue-100 text-base md:text-lg mb-4">
               Kies een pakket dat past bij jouw tempo. Alle prijzen zijn totaalprijzen.
+            </p>
+            <p className="text-secondary font-semibold text-sm mb-2">
+              Proefles: € 50,00 (gratis bij afname van een lespakket)
+            </p>
+            <p className="text-amber-300 font-bold text-sm">
+              € 4,- korting per rijles bij inschrijven vóór mei 2026!
             </p>
           </motion.div>
         </div>
@@ -759,17 +767,15 @@ export default function Rijlessen() {
               <div className="ml-4 rounded-2xl overflow-hidden shadow-xl border border-gray-100 bg-white p-5 text-center">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Losse rijles</h3>
                 <p className="text-gray-600 text-sm mb-3">
-                  Geen pakket nodig? Boek een enkele les wanneer het jou uitkomt.
+                  Geen pakket nodig? Boek een enkele les wanneer het jou uitkomt. Bij Rijschool Dynamiek kan je per maand en zelfs per rijles betalen.
                 </p>
-                <p className="text-2xl font-black text-primary mb-1">€ 55,00 per les</p>
-                <p className="text-xs text-gray-500 mb-4">per les van 50 minuten</p>
-                <button
-                  type="button"
-                  onClick={() => setBookingItem({ type: 'single', price: '55,00' })}
+                <p className="text-primary font-bold text-sm mb-4">Vraag naar de prijs</p>
+                <a
+                  href="/#contact"
                   className="inline-flex items-center justify-center w-full py-2.5 rounded-xl font-bold text-sm bg-primary text-white hover:bg-primary-dark transition-colors"
                 >
-                  Les boeken
-                </button>
+                  Neem contact op
+                </a>
               </div>
             </motion.div>
           </div>
@@ -842,17 +848,15 @@ export default function Rijlessen() {
                       <div className="p-5 md:p-6 text-center">
                         <h3 className="text-lg md:text-xl font-bold mb-2">Losse rijles</h3>
                         <p className="text-gray-600 text-sm mb-3">
-                          Geen pakket nodig? Boek een enkele les wanneer het jou uitkomt.
+                          Geen pakket nodig? Boek een enkele les wanneer het jou uitkomt. Bij Rijschool Dynamiek kan je per maand en zelfs per rijles betalen.
                         </p>
-                        <p className="text-xl md:text-2xl font-black text-primary mb-1">€ 55,00 per les</p>
-                        <p className="text-xs text-gray-500 mb-4">per les van 50 minuten</p>
-                        <button
-                          type="button"
-                          onClick={() => setBookingItem({ type: 'single', price: '55,00' })}
+                        <p className="text-primary font-bold text-sm mb-4">Vraag naar de prijs</p>
+                        <a
+                          href="/#contact"
                           className="inline-flex items-center justify-center w-full py-2.5 rounded-xl font-bold text-xs bg-primary text-white hover:bg-primary-dark transition-colors"
                         >
-                          Les boeken
-                        </button>
+                          Neem contact op
+                        </a>
                       </div>
                     </motion.div>
                     <motion.div

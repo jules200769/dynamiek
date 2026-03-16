@@ -3,48 +3,47 @@ import { Check, Star } from 'lucide-react';
 
 const packages = [
   {
-    name: 'Basis Pakket',
-    price: '1.499',
-    lessons: '20 lessen',
+    name: 'Instap Pakket',
+    price: '570',
+    lessons: '10 rijlessen van 50 min',
     features: [
-      '20 rijlessen van 60 min',
-      'Praktijkexamen CBR',
-      'Online theoriecursus',
-      'Tussentijdse toets',
-      'Vaste instructeur'
+      '5 bloklessen van 100 min',
+      'Snel beginnen',
+      'Vaste instructeur',
+      'Vanaf 16,5 jaar'
     ],
     popular: false,
     color: 'bg-white'
   },
   {
-    name: 'Zekerheid Pakket',
-    price: '2.199',
-    lessons: '35 lessen',
+    name: 'Basis Pakket',
+    price: '1.533,50',
+    lessons: '20 rijlessen van 50 min',
     features: [
-      '35 rijlessen van 60 min',
-      'Praktijkexamen CBR',
-      'Gratis herexamen',
-      'Online theoriecursus',
-      'Tussentijdse toets',
-      'Vaste instructeur'
+      '10 bloklessen van 100 min',
+      'Snel beginnen',
+      'Vaste instructeur',
+      'Vanaf 16,5 jaar',
+      'Gratis herhalingsles (50 min)',
+      'Praktijkexamen'
+    ],
+    popular: false,
+    color: 'bg-white'
+  },
+  {
+    name: 'Compact Pakket',
+    price: '1.875',
+    lessons: '26 rijlessen van 50 min',
+    features: [
+      '13 bloklessen van 100 min',
+      'Snel beginnen',
+      'Vaste instructeur',
+      'Vanaf 16,5 jaar',
+      'Gratis herhalingsles (50 min)',
+      'Praktijkexamen'
     ],
     popular: true,
     color: 'bg-primary'
-  },
-  {
-    name: 'Snelcursus',
-    price: '1.899',
-    lessons: '25 lessen',
-    features: [
-      '25 rijlessen van 60 min',
-      'Binnen 2-4 weken examen',
-      'Praktijkexamen CBR',
-      'Online theoriecursus',
-      'Intensieve begeleiding',
-      'Vaste instructeur'
-    ],
-    popular: false,
-    color: 'bg-white'
   }
 ];
 
@@ -65,7 +64,7 @@ export default function Pricing() {
           </h3>
           <p className="text-gray-600">
             Kies het pakket dat het beste bij jouw ervaring en budget past. 
-            Niet zeker? Start met een gratis proefles voor een persoonlijk advies.
+            Niet zeker? Mail of bel voor een gratis proefles (gratis bij afname van een lespakket).
           </p>
         </motion.div>
 
@@ -118,7 +117,7 @@ export default function Pricing() {
               </ul>
 
               <a
-                href="#contact"
+                href="/rijlessen"
                 className={`w-full py-4 rounded-xl font-bold text-center transition-all duration-300 ${
                   pkg.popular
                     ? 'bg-secondary text-white hover:bg-secondary-dark shadow-lg shadow-secondary/20'
@@ -131,9 +130,12 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-16 text-center space-y-2">
+          <p className="text-primary font-semibold text-sm">
+            € 4,- korting per rijles bij inschrijven vóór mei 2026!
+          </p>
           <p className="text-gray-500 text-sm">
-            * Losse lessen zijn ook mogelijk voor € 58,- per 60 minuten. 
+            Bij Rijschool Dynamiek kan je per maand en zelfs per rijles betalen. 
             Alle prijzen zijn inclusief BTW.
           </p>
         </div>

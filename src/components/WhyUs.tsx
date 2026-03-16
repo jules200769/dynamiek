@@ -18,13 +18,13 @@ const benefits = [
     icon: <User className="text-secondary" size={24} />
   },
   {
-    title: 'Mannelijke & vrouwelijke instructeurs',
-    description: 'Kies zelf bij wie je je het prettigst voelt. Wij hebben een divers team van professionals.',
+    title: 'Ervaren instructeurs',
+    description: 'Onze instructeurs zijn gediplomeerd en hebben ruime ervaring in het geven van rijlessen.',
     icon: <Users className="text-secondary" size={24} />
   },
   {
     title: 'Moderne lesvoertuigen',
-    description: 'Lessen in de nieuwste modellen auto’s en motoren, voorzien van alle moderne gemakken.',
+    description: 'Lessen in een moderne lesauto, voorzien van alle gemakken voor een optimale leerervaring.',
     icon: <Shield className="text-secondary" size={24} />
   },
   {
@@ -47,14 +47,14 @@ export default function WhyUs() {
             transition={{ duration: 0.6 }}
             className="lg:w-1/2"
           >
-            <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Waarom De Expert?</h2>
+            <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Waarom Rijschool Dynamiek?</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 leading-tight">
               De beste begeleiding voor jouw rijbewijs
             </h3>
             <p className="text-gray-600 mb-10 text-lg leading-relaxed">
-              Wij geloven dat iedereen op zijn eigen tempo leert. Daarom bieden wij maatwerk 
-              voor elke leerling. Onze methode is bewezen effectief en zorgt voor een 
-              ontspannen leeromgeving.
+              Met onze methode Dynamisch Leren Rijden in stappen passen we de lessen aan op jouw persoonlijke leerstijl. 
+              Wij streven ernaar je beter voor te bereiden op het examen, dit in een zo kort mogelijke periode te realiseren, 
+              en je veiliger, bewuster en zelfstandiger te laten rijden.
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -109,7 +109,7 @@ export default function WhyUs() {
               className="absolute -bottom-8 -right-8 bg-white p-6 rounded-2xl shadow-xl z-20 hidden sm:block border border-gray-100"
             >
               <div className="text-center">
-                <span className="block text-3xl font-black text-primary">94%</span>
+                <span className="block text-3xl font-black text-primary">Hoog</span>
                 <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Slagingspercentage</span>
               </div>
             </motion.div>

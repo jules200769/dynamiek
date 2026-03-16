@@ -18,6 +18,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Rijlessen', href: '/rijlessen' },
+    { name: 'Werkwijze', href: '/#werkwijze' },
     { name: 'Tarieven', href: '/#pricing' },
     { name: 'Regio', href: '/#regions' },
     { name: 'FAQ', href: '/#faq' },
@@ -61,7 +62,7 @@ export default function Navbar() {
             </div>
             <div className="flex items-center space-x-2">
               <Phone size={14} className="text-secondary" />
-              <a href="tel:0851234567" className="hover:text-secondary transition-colors">085 - 123 45 67</a>
+              <a href="tel:0648592704" className="hover:text-secondary transition-colors">06 - 4859 2704</a>
             </div>
           </div>
         </div>
@@ -88,14 +89,14 @@ export default function Navbar() {
                   }}
                   className="w-11 h-11 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-6 transition-transform duration-500"
                 >
-                  <span className="text-white font-black text-2xl">E</span>
+                  <span className="text-white font-black text-2xl">D</span>
                 </motion.div>
                 <div className="ml-3 flex flex-col">
                   <span className="text-xl font-black tracking-tighter leading-none text-white">
-                    DE EXPERT
+                    DYNAMIEK
                   </span>
                   <span className="text-[9px] font-bold tracking-[0.1em] uppercase leading-none mt-1 text-white/80">
-                    CBR-erkende rijschool
+                    Dynamisch in stappen leren rijden
                   </span>
                 </div>
               </Link>
@@ -183,7 +184,7 @@ export default function Navbar() {
                 <div className="pt-8 flex flex-col items-center space-y-4 text-gray-500">
                   <div className="flex items-center space-x-2 font-bold text-primary">
                     <Phone size={18} />
-                    <span>085 - 123 45 67</span>
+                    <span>06 - 4859 2704</span>
                   </div>
                   <div className="flex items-center space-x-4 text-[10px] uppercase font-bold tracking-widest">
                     <span className="flex items-center"><CheckCircle2 size={12} className="mr-1 text-secondary" /> CBR-ERKEND</span>

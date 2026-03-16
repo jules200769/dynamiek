@@ -14,6 +14,7 @@ import Reviews from './components/Reviews';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Workwijze from './components/Workwijze';
 import Rijlessen from './pages/Rijlessen';
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
               <>
                 <Hero />
                 <Services />
+                <Workwijze />
                 <WhyUs />
                 <Pricing />
                 <Reviews />

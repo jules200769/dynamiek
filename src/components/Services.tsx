@@ -1,34 +1,13 @@
 import { motion } from 'motion/react';
-import { Car, Bike, Truck, Zap } from 'lucide-react';
+import { Car } from 'lucide-react';
 
 const services = [
   {
     title: 'Auto Rijbewijs (B)',
-    description: 'De meest gekozen opleiding. Wij bieden zowel handgeschakeld als automaat lessen aan.',
+    description: 'De rijopleiding bij Rijschool Dynamiek leidt op voor het rijbewijs B. Met onze methode Dynamisch Leren Rijden in stappen bereiden we je optimaal voor op het praktijkexamen.',
     icon: <Car size={32} />,
     image: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=2070&auto=format&fit=crop',
-    link: '#contact'
-  },
-  {
-    title: 'Motor Rijbewijs (A)',
-    description: 'Ervaar de vrijheid op twee wielen. Professionele begeleiding voor alle categorieën (A1, A2, A).',
-    icon: <Bike size={32} />,
-    image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop',
-    link: '#contact'
-  },
-  {
-    title: 'Scooter Rijbewijs (AM)',
-    description: 'Snel en veilig je bromfietsrijbewijs halen. In één dag mogelijk bij De Expert.',
-    icon: <Zap size={32} />,
-    image: 'https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=2070&auto=format&fit=crop',
-    link: '#contact'
-  },
-  {
-    title: 'Aanhanger (BE)',
-    description: 'Voor het rijden met een zware aanhanger of caravan. Haal je BE rijbewijs in één dag.',
-    icon: <Truck size={32} />,
-    image: 'https://images.unsplash.com/photo-1586191582151-f73872dfd183?q=80&w=2070&auto=format&fit=crop',
-    link: '#contact'
+    link: '/rijlessen'
   }
 ];
 
@@ -43,14 +22,14 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Onze Opleidingen</h2>
+          <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Onze Opleiding</h2>
           <p className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-            Kies de opleiding die bij jou past
+            Rijbewijs B – Dynamisch in stappen leren rijden
           </p>
           <div className="w-20 h-1.5 bg-secondary mx-auto rounded-full"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 max-w-2xl mx-auto gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
