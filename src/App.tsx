@@ -15,6 +15,7 @@ import Reviews from './components/Reviews';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import FloatingActions from './components/FloatingActions';
 import Workwijze from './components/Workwijze';
 import Rijlessen from './pages/Rijlessen';
 import VeelGesteldeVragen from './pages/VeelGesteldeVragen';
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/veel-gestelde-vragen" element={<VeelGesteldeVragen />} />
         </Routes>
       </main>
+      <FloatingActions />
       <Footer />
     </div>
   );

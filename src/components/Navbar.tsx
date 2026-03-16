@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, Phone, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { WhatsAppIcon } from './FloatingActions';
 import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
 
 const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'Tarievenn', to: '/rijlessen' },
-  { label: 'Werkwijze', to: '/#werkwijze' },
   { label: 'Veel gestelde vragen', to: '/veel-gestelde-vragen' },
-  { label: 'Contact', to: '/#contact' },
 ];
 
 export default function Navbar() {
@@ -70,11 +69,13 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a
-            href="tel:+31648592704"
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-primary hover:text-primary"
+            href="https://wa.me/31648592704"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-md transition-transform hover:scale-105"
           >
-            <Phone size={16} />
-            06 4859 2704
+            <WhatsAppIcon size={18} />
+            WhatsApp
           </a>
         </div>
 
