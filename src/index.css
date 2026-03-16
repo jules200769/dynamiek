@@ -39,12 +39,13 @@
     scrollbar-width: none;
   }
 
-  /* Navbar GlassSurface: geen rand, minimale onder schaduw */
-  .navbar-glass.glass-surface {
-    border: none;
-    box-shadow: 0 1px 3px rgba(17, 17, 26, 0.04);
-  }
-  .navbar-glass.glass-surface--fallback {
-    border: none;
+  /* GlassSurface op mobile: blur altijd toepassen (SVG-filter werkt niet overal) */
+  @media (max-width: 1023px) {
+    /* Andere GlassSurface-elementen behouden hetzelfde blur-effect op mobile */
+    .glass-surface--svg {
+      backdrop-filter: blur(16px) saturate(1.8) brightness(1.05);
+      -webkit-backdrop-filter: blur(16px) saturate(1.8) brightness(1.05);
+      background: rgba(255, 255, 255, 0.15);
+    }
   }
 }

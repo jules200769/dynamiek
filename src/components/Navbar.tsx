@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Phone, CheckCircle2, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import GlassSurface from '@/components/GlassSurface';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,35 +28,31 @@ export default function Navbar() {
   return (
     <header className="fixed w-full z-50 px-4 pt-4 pointer-events-none">
       <div className="max-w-7xl mx-auto pointer-events-auto">
-        {/* Main Navbar Island - GlassSurface effect */}
+        {/* Main Navbar */}
         <nav 
-          className={`transition-all duration-500 ease-in-out overflow-hidden ${
-            scrolled ? 'py-2 rounded-2xl mt-0' : isOpen ? 'py-5 rounded-t-2xl' : 'py-5 rounded-2xl'
+          className={`bg-white border border-gray-100 shadow-lg shadow-gray-900/5 transition-all duration-500 ease-in-out overflow-hidden ${
+            scrolled ? 'py-1.5 rounded-2xl mt-0' : isOpen ? 'py-3.5 rounded-t-2xl' : 'py-3.5 rounded-2xl'
           }`}
           style={{ 
             borderRadius: scrolled ? '1rem' : isOpen ? '1rem 1rem 0 0' : '1rem',
           }}
         >
-          <GlassSurface
-            width="100%"
-            height="auto"
-            borderRadius={16}
-            className="navbar-glass"
-            style={{ minHeight: scrolled ? 56 : 72 }}
+          <div
+            className="px-6 w-full flex flex-col items-stretch"
+            style={{ minHeight: scrolled ? 48 : 60 }}
           >
-            <div className="px-6 w-full flex flex-col items-stretch">
             <div className="flex justify-between items-center">
             {/* Logo Area */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center group">
-                <div className="w-11 h-11 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                  <span className="text-white font-black text-2xl">D</span>
+                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                  <span className="text-white font-black text-xl">D</span>
                 </div>
                 <div className="ml-3 flex flex-col">
-                  <span className="text-xl font-black tracking-tighter leading-none text-white">
+                  <span className="text-lg font-black tracking-tighter leading-none text-gray-900">
                     DYNAMIEK
                   </span>
-                  <span className="text-[9px] font-bold tracking-[0.1em] uppercase leading-none mt-1 text-white/80">
+                  <span className="text-[9px] font-bold tracking-[0.1em] uppercase leading-none mt-1 text-gray-500">
                     Dynamisch in stappen leren rijden
                   </span>
                 </div>
@@ -71,10 +66,10 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group ${scrolled || isOpen ? 'text-gray-600 hover:text-primary' : 'text-white/90 hover:text-white'}`}
+                    className="text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group text-gray-600 hover:text-primary"
                   >
                     {link.name}
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${scrolled || isOpen ? 'bg-primary' : 'bg-white'}`}></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary"></span>
                   </Link>
                 ))}
               </div>
@@ -83,7 +78,7 @@ export default function Navbar() {
 
               <Link 
                 to="/#contact" 
-                className="bg-secondary hover:bg-secondary-dark text-white py-3.5 px-8 rounded-xl font-extrabold text-[13px] uppercase tracking-widest transition-all duration-300 shadow-lg shadow-secondary/30 flex items-center"
+                className="bg-secondary hover:bg-secondary-dark text-white py-3 px-7 rounded-xl font-extrabold text-[13px] uppercase tracking-widest transition-all duration-300 shadow-lg shadow-secondary/30 flex items-center"
               >
                 Gratis Proefles
                 <span className="ml-2">→</span>
@@ -106,8 +101,7 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-            </div>
-          </GlassSurface>
+          </div>
 
         {/* Mobile Menu */}
         <AnimatePresence>
