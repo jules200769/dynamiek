@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Mail, Phone } from 'lucide-react';
 import { WhatsAppIcon } from './FloatingActions';
 import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
+
+const EMAIL = 'info@rijschooldynamiek.nl';
+const PHONE = '06 - 4859 2704';
+const PHONE_LINK = '+31648592704';
+const WHATSAPP_LINK = 'https://wa.me/31648592704';
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -12,6 +17,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hideBar, setHideBar] = useState(false);
   const location = useLocation();
@@ -68,15 +74,13 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a
-            href="https://wa.me/31648592704"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-md transition-transform hover:scale-105"
+          <button
+            type="button"
+            onClick={() => setContactModalOpen(true)}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
           >
-            <WhatsAppIcon size={18} />
-            WhatsApp
-          </a>
+            Contacten
+          </button>
         </div>
 
         <button
@@ -103,19 +107,90 @@ export default function Navbar() {
             ))}
           </nav>
           <div className="mt-4 grid gap-2">
-            <a
-              href="tel:+31648592704"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700"
+            <button
+              type="button"
+              onClick={() => { setContactModalOpen(true); setMenuOpen(false); }}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
             >
-              <Phone size={16} />
-              Bel ons direct
-            </a>
+              Contacten
+            </button>
             <Link
               to="/#contact"
+              onClick={() => setMenuOpen(false)}
               className="inline-flex items-center justify-center rounded-xl bg-secondary px-4 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white"
             >
               Vraag proefles aan
             </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Contact-modal: e-mail, bellen, WhatsApp */}
+      {contactModalOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+          onClick={() => setContactModalOpen(false)}
+          aria-modal="true"
+          role="dialog"
+          aria-labelledby="contact-modal-title"
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <h2 id="contact-modal-title" className="text-lg font-bold text-gray-900">
+                Contact
+              </h2>
+              <button
+                type="button"
+                onClick={() => setContactModalOpen(false)}
+                className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                aria-label="Sluiten"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-6 space-y-3">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="flex items-center gap-4 rounded-xl border border-gray-200 p-4 text-gray-800 hover:bg-primary/5 hover:border-primary/20 transition-colors"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Mail size={24} />
+                </span>
+                <div className="min-w-0 flex-1 text-left">
+                  <p className="font-semibold text-gray-900">E-mail</p>
+                  <p className="text-sm text-gray-600 truncate">{EMAIL}</p>
+                </div>
+              </a>
+              <a
+                href={`tel:${PHONE_LINK}`}
+                className="flex items-center gap-4 rounded-xl border border-gray-200 p-4 text-gray-800 hover:bg-primary/5 hover:border-primary/20 transition-colors"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Phone size={24} />
+                </span>
+                <div className="min-w-0 flex-1 text-left">
+                  <p className="font-semibold text-gray-900">Bellen</p>
+                  <p className="text-sm text-gray-600">{PHONE}</p>
+                </div>
+              </a>
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 rounded-xl border border-[#25D366]/40 p-4 text-gray-800 hover:bg-[#25D366]/15 hover:border-[#25D366] transition-colors"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-white shadow-md shadow-[#25D366]/30">
+                  <WhatsAppIcon size={24} />
+                </span>
+                <div className="min-w-0 flex-1 text-left">
+                  <p className="font-semibold text-gray-900">WhatsApp</p>
+                  <p className="text-sm text-gray-600">Stuur een bericht</p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       )}

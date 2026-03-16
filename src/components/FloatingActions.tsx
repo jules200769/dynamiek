@@ -32,7 +32,7 @@ export default function FloatingActions() {
         href={`https://wa.me/${PHONE}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition-transform whatsapp-pulse-glow"
+        className="flex items-center justify-center w-14 h-14 rounded-full bg-[#22C55E] text-white shadow-lg shadow-[#22C55E]/50 hover:scale-105 hover:bg-[#20E070] transition-all whatsapp-pulse-glow"
         aria-label="WhatsApp"
       >
         <WhatsAppIcon size={28} />
