@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ChevronRight, Star } from 'lucide-react';
+import GlassSurface from '@/components/GlassSurface';
 
 import heroVideo from '../../747eacd9-e251-4c7f-985a-6a96eb404fcd.mp4';
 import heroVideoMobile from '../../Generated Video March 15, 2026 - 11_21PM.mp4';
@@ -58,24 +59,32 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="flex-1 text-white"
           >
-            {/* Lange witte container rond de reviews boven de titel */}
-            <div className="w-full max-w-[680px] mb-4 bg-white/10 backdrop-blur-xl rounded-xl px-5 py-4 shadow-lg border border-white/20">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="font-bold text-white text-base">G</span>
-                <span className="text-white/80 text-sm">(4,8/5) Google | 600+ reviews</span>
+            {/* Lange witte container rond de reviews boven de titel – GlassSurface effect */}
+            <GlassSurface
+              width="100%"
+              height="auto"
+              borderRadius={12}
+              className="w-full max-w-[680px] mb-4 shadow-lg"
+              style={{ minHeight: 72 }}
+            >
+              <div className="w-full px-5 py-4 flex flex-col items-start text-left">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-bold text-white text-base">G</span>
+                  <span className="text-white/80 text-sm">(4,8/5) Google | 600+ reviews</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={20} className="fill-secondary text-secondary" />
+                  ))}
+                  <a
+                    href="#reviews"
+                    className="ml-2 text-sm font-semibold text-secondary underline underline-offset-2 hover:text-secondary/80 transition-colors"
+                  >
+                    Bekijk hier &rsaquo;
+                  </a>
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={20} className="fill-secondary text-secondary" />
-                ))}
-                <a
-                  href="#reviews"
-                  className="ml-2 text-sm font-semibold text-secondary underline underline-offset-2 hover:text-secondary/80 transition-colors"
-                >
-                  Bekijk hier &rsaquo;
-                </a>
-              </div>
-            </div>
+            </GlassSurface>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 max-w-[605px]">
               Rijschool <span className="text-secondary">Dynamiek</span>
@@ -115,24 +124,24 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="w-full lg:w-[450px] flex-shrink-0"
           >
-            <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-7 md:p-8 border border-white/20">
+            <div className="bg-white rounded-2xl shadow-2xl p-7 md:p-8 border border-gray-200">
               {submitted ? (
                 <div className="text-center py-10">
-                  <div className="w-16 h-16 bg-white/20 text-green-300 rounded-full flex items-center justify-center mx-auto mb-5">
-                    <Star size={28} className="fill-green-400 text-green-400" />
+                  <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-5">
+                    <Star size={28} className="fill-green-500 text-green-500" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Bedankt voor je aanvraag!</h3>
-                  <p className="text-white/80 text-sm mb-6">We nemen zo snel mogelijk contact met je op.</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Bedankt voor je aanvraag!</h3>
+                  <p className="text-gray-600 text-sm mb-6">We nemen zo snel mogelijk contact met je op.</p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="text-white font-semibold hover:underline text-sm"
+                    className="text-primary font-semibold hover:underline text-sm"
                   >
                     Nog een aanvraag doen
                   </button>
                 </div>
               ) : (
                 <>
-                  <h2 className="text-xl font-extrabold text-white text-center mb-1">
+                  <h2 className="text-xl font-extrabold text-gray-900 text-center mb-1">
                     Vraag onze gratis proefles aan!
                   </h2>
                   <p className="text-secondary font-semibold text-center text-sm mb-5">
@@ -143,9 +152,9 @@ export default function Hero() {
                     <select
                       required
                       defaultValue=""
-                      className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 appearance-none [color-scheme:dark]"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                     >
-                      <option value="" disabled className="text-gray-900">Selecteer je opleiding</option>
+                      <option value="" disabled className="text-gray-500">Selecteer je opleiding</option>
                       <option className="text-gray-900">Auto (B)</option>
                     </select>
 
@@ -154,11 +163,11 @@ export default function Hero() {
                         required
                         type="text"
                         placeholder="Naam en Achternaam"
-                        className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
                       <input
                         type="date"
-                        className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white/90 text-sm focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 [color-scheme:dark]"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
                     </div>
 
@@ -167,13 +176,13 @@ export default function Hero() {
                         required
                         type="email"
                         placeholder="E-mail adres"
-                        className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
                       <input
                         required
                         type="tel"
                         placeholder="Telefoonnummer"
-                        className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
                     </div>
 
@@ -181,26 +190,26 @@ export default function Hero() {
                       <input
                         type="text"
                         placeholder="Woonplaats"
-                        className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
                       <input
                         type="text"
                         placeholder="Postcode"
-                        className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                       />
                     </div>
 
                     <input
                       type="text"
                       placeholder="Adres"
-                      className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                     />
 
                     <select
                       defaultValue=""
-                      className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white/80 text-sm focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 appearance-none [color-scheme:dark]"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
                     >
-                      <option value="" disabled className="text-gray-900">Hoe heb je ons gevonden?</option>
+                      <option value="" disabled className="text-gray-500">Hoe heb je ons gevonden?</option>
                       <option className="text-gray-900">Google</option>
                       <option className="text-gray-900">Social media</option>
                       <option className="text-gray-900">Via via</option>
@@ -210,7 +219,7 @@ export default function Hero() {
                     <textarea
                       rows={3}
                       placeholder="Eventueel bericht (niet verplicht)"
-                      className="w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 text-white text-sm placeholder-white/50 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 resize-none"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 text-sm placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 resize-none"
                     ></textarea>
 
                     <label className="flex items-start gap-2 cursor-pointer">
@@ -221,7 +230,7 @@ export default function Hero() {
                         onChange={(e) => setAgreed(e.target.checked)}
                         className="mt-0.5 accent-secondary flex-shrink-0"
                       />
-                      <span className="text-xs text-white/80 leading-relaxed">
+                      <span className="text-xs text-gray-600 leading-relaxed">
                         Ik ga akkoord met de{' '}
                         <a href="#" className="text-secondary underline hover:text-secondary/80">
                           algemene voorwaarden
@@ -230,7 +239,7 @@ export default function Hero() {
                         <a href="#" className="text-secondary underline hover:text-secondary/80">
                           privacybeleid
                         </a>.
-                        {!agreed && <span className="text-amber-300 ml-1">(Vereist)</span>}
+                        {!agreed && <span className="text-amber-600 ml-1">(Vereist)</span>}
                       </span>
                     </label>
 

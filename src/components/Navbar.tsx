@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Phone, Star, CheckCircle2, Clock } from 'lucide-react';
+import { Menu, X, Phone, CheckCircle2, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Navbar() {
@@ -28,65 +28,28 @@ export default function Navbar() {
   return (
     <header className="fixed w-full z-50 px-4 pt-4 pointer-events-none">
       <div className="max-w-7xl mx-auto pointer-events-auto">
-        {/* Top Trust Bar - aligned with island: left blur, right blue gradient */}
-        <div
-          className={`text-white/90 py-2 transition-all duration-500 ease-in-out overflow-hidden rounded-2xl backdrop-blur-xl ${scrolled ? 'max-h-0 opacity-0 mb-0' : 'max-h-14 opacity-100 mb-2'}`}
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,0.35) 0%, rgba(147,197,253,0.55) 50%, rgba(59,130,246,0.85) 100%)',
-            WebkitBackdropFilter: 'blur(24px)',
-          }}
-        >
-          <div className="px-6 flex justify-between items-center text-[11px] font-semibold tracking-wider uppercase">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 size={14} className="text-secondary" />
-                <span>CBR-erkend</span>
-              </div>
-              <div className="hidden sm:flex items-center space-x-2">
-                <Clock size={14} className="text-secondary" />
-                <span>10+ jaar ervaring</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* Google logo for reviews */}
-                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                <div className="flex text-secondary">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={10} fill="currentColor" />)}
-                </div>
-                <span>4.9/5 Rating</span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Phone size={14} className="text-secondary" />
-              <a href="tel:0648592704" className="hover:text-secondary transition-colors">06 - 4859 2704</a>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Navbar Island */}
+        {/* Main Navbar */}
         <nav 
-          className={`transition-all duration-500 ease-in-out bg-gradient-to-r from-primary/75 via-blue-200/60 to-white/40 shadow-lg backdrop-blur-xl ${
-            scrolled ? 'py-2 rounded-2xl mt-2' : isOpen ? 'py-5 rounded-t-2xl' : 'py-5 rounded-2xl'
+          className={`bg-white border border-gray-100 shadow-lg shadow-gray-900/5 transition-all duration-500 ease-in-out overflow-hidden ${
+            scrolled ? 'py-1.5 rounded-2xl mt-0' : isOpen ? 'py-3.5 rounded-t-2xl' : 'py-3.5 rounded-2xl'
           }`}
           style={{ 
             borderRadius: scrolled ? '1rem' : isOpen ? '1rem 1rem 0 0' : '1rem',
-            WebkitBackdropFilter: 'blur(24px)',
           }}
         >
-          <div className="px-6">
+          <div
+            className="px-6 w-full flex flex-col items-stretch"
+            style={{ minHeight: scrolled ? 48 : 60 }}
+          >
             <div className="flex justify-between items-center">
-            {/* Logo Area (tekst i.p.v. afbeelding) */}
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center group">
-                <span className="text-lg md:text-xl font-extrabold tracking-tight text-white drop-shadow-sm">
-                  Rijschool <span className="text-secondary">Dynamiek</span>
-                </span>
-              </Link>
-            </div>
+              {/* Logo Area (tekst i.p.v. afbeelding) */}
+              <div className="flex items-center">
+                <Link to="/" className="flex items-center group">
+                  <span className="text-lg md:text-xl font-extrabold tracking-tight text-gray-900">
+                    Rijschool <span className="text-primary">Dynamiek</span>
+                  </span>
+                </Link>
+              </div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-8">
@@ -95,10 +58,10 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group ${scrolled || isOpen ? 'text-gray-600 hover:text-primary' : 'text-white/90 hover:text-white'}`}
+                    className="text-[13px] font-bold uppercase tracking-widest transition-all duration-300 relative group text-gray-600 hover:text-primary"
                   >
                     {link.name}
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${scrolled || isOpen ? 'bg-primary' : 'bg-white'}`}></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary"></span>
                   </Link>
                 ))}
               </div>
@@ -107,16 +70,10 @@ export default function Navbar() {
 
               <Link 
                 to="/#contact" 
-                className="bg-secondary hover:bg-secondary-dark text-white py-3.5 px-8 rounded-xl font-extrabold text-[13px] uppercase tracking-widest transition-all duration-300 shadow-lg shadow-secondary/30 transform hover:-translate-y-1 hover:shadow-xl active:scale-95 flex items-center"
+                className="bg-secondary hover:bg-secondary-dark text-white py-3 px-7 rounded-xl font-extrabold text-[13px] uppercase tracking-widest transition-all duration-300 shadow-lg shadow-secondary/30 flex items-center"
               >
                 Gratis Proefles
-                <motion.span 
-                  animate={{ x: [0, 4, 0] }} 
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="ml-2"
-                >
-                  →
-                </motion.span>
+                <span className="ml-2">→</span>
               </Link>
             </div>
 
@@ -136,7 +93,7 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-        </div>
+          </div>
 
         {/* Mobile Menu */}
         <AnimatePresence>

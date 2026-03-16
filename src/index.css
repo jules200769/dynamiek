@@ -24,7 +24,7 @@
   }
   
   .btn-primary {
-    @apply bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 inline-flex items-center justify-center;
+    @apply bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg inline-flex items-center justify-center;
   }
 
   .btn-outline {
@@ -37,5 +37,15 @@
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* GlassSurface op mobile: blur altijd toepassen (SVG-filter werkt niet overal) */
+  @media (max-width: 1023px) {
+    /* Andere GlassSurface-elementen behouden hetzelfde blur-effect op mobile */
+    .glass-surface--svg {
+      backdrop-filter: blur(16px) saturate(1.8) brightness(1.05);
+      -webkit-backdrop-filter: blur(16px) saturate(1.8) brightness(1.05);
+      background: rgba(255, 255, 255, 0.15);
+    }
   }
 }
