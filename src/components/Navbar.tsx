@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Mail, Phone } from 'lucide-react';
 import { WhatsAppIcon } from './FloatingActions';
@@ -20,13 +20,53 @@ export default function Navbar() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hideBar, setHideBar] = useState(false);
+  const [hiddenByScroll, setHiddenByScroll] = useState(false);
   const location = useLocation();
+  const lastScrollYRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const isMobile = () => window.innerWidth < 1024; // Tailwind lg breakpoint
+    const delta = 6; // ignore tiny scroll jitter
+
+    const onScroll = () => {
+      if (rafRef.current != null) return;
+      rafRef.current = window.requestAnimationFrame(() => {
+        rafRef.current = null;
+        if (!isMobile() || hideBar || menuOpen || contactModalOpen) {
+          setHiddenByScroll(false);
+          lastScrollYRef.current = window.scrollY;
+          return;
+        }
+
+        const y = window.scrollY;
+        const last = lastScrollYRef.current;
+
+        // Always show near the top
+        if (y <= 12) setHiddenByScroll(false);
+        else if (y > last + delta) setHiddenByScroll(true); // scroll down -> hide
+        else if (y < last - delta) setHiddenByScroll(false); // scroll up -> show
+
+        lastScrollYRef.current = y;
+      });
+    };
+
+    lastScrollYRef.current = window.scrollY;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafRef.current != null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -44,7 +84,11 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 px-4 pt-4 transition-opacity duration-200 ${hideBar ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      className={`fixed inset-x-0 top-0 z-50 px-4 pt-4 transform-gpu will-change-transform transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
+        hideBar ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      } ${
+        hiddenByScroll ? '-translate-y-[110%] pointer-events-none lg:translate-y-0 lg:pointer-events-auto' : 'translate-y-0'
+      }`}
     >
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-white/40 bg-white/95 px-4 py-3 backdrop-blur transition-all duration-300 md:px-6 ${
