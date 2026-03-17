@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
 import USPScroller from './USPScroller';
 import workwijzeFoto from '../../Schermafbeelding 2026-03-17 151255.png';
 
@@ -54,15 +53,6 @@ export default function Workwijze() {
             </ul>
           </div>
 
-          {/* Buttons below the card */}
-          <div className="flex flex-wrap gap-3">
-            <a href="#contact" className="btn-primary gap-2">
-              Gratis Proefles <ArrowRight size={18} />
-            </a>
-            <a href="#tarieven" className="btn-outline border-white text-white hover:bg-white hover:text-[#0b2648] gap-2">
-              Tarieven <ArrowRight size={18} />
-            </a>
-          </div>
         </motion.div>
 
         {/* Right image — touches right viewport edge */}
