@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import USPScroller from './USPScroller';
+import workwijzeFoto from '../../Schermafbeelding 2026-03-17 151255.png';
 
 const modules = [
   'Module 1: Voertuigbediening en beheersing',
@@ -70,10 +71,10 @@ export default function Workwijze() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="lg:w-1/2 relative rounded-3xl overflow-hidden mx-4 sm:mx-6 lg:mx-0 aspect-[16/10]"
+          className="lg:w-1/2 relative rounded-3xl overflow-hidden mx-4 sm:mx-6 lg:mx-0 aspect-[4/5] sm:aspect-[16/12] lg:aspect-[16/10]"
         >
           <img
-            src="/waarom-achtergrond.jpg"
+            src={workwijzeFoto}
             alt="Interieur lesvoertuig Rijschool Dynamiek"
             className="absolute inset-0 w-full h-full object-cover"
           />
