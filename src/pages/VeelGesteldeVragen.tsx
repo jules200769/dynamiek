@@ -294,7 +294,7 @@ export default function VeelGesteldeVragen() {
     <div className="min-h-screen">
       {/* Hero: split layout with heading + image placeholder */}
       <div className="relative bg-primary text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(245,158,11,0.08),transparent_60%)]" />
+        <div className="absolute inset-0 hidden md:block bg-[radial-gradient(ellipse_at_80%_20%,rgba(245,158,11,0.08),transparent_60%)]" />
         <div className="container-custom py-12 md:py-20 relative z-10">
           <Link
             to="/"
@@ -355,7 +355,7 @@ export default function VeelGesteldeVragen() {
       </div>
 
       {/* Intro strip */}
-      <div className="relative bg-lines-pattern">
+      <div className="relative bg-white md:bg-lines-pattern">
         <div className="container-custom relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

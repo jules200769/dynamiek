@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Mail, Phone, Instagram } from 'lucide-react';
 import { WhatsAppIcon } from './FloatingActions';
 import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
@@ -137,7 +139,7 @@ export default function Navbar() {
             onClick={() => setContactModalOpen(true)}
             className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
           >
-            Contacten
+            Contact
           </button>
         </div>
 
@@ -183,81 +185,137 @@ export default function Navbar() {
               onClick={() => { setContactModalOpen(true); setMenuOpen(false); }}
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
             >
-              Contacten
+              Contact
             </button>
           </div>
         </div>
       )}
 
-      {/* Contact-modal: e-mail, bellen, WhatsApp */}
-      {contactModalOpen && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-          onClick={() => setContactModalOpen(false)}
-          aria-modal="true"
-          role="dialog"
-          aria-labelledby="contact-modal-title"
+      <ContactModal open={contactModalOpen} onClose={() => setContactModalOpen(false)} />
+    </header>
+  );
+}
+
+const contactOptions = [
+  {
+    href: `mailto:${EMAIL}`,
+    icon: <Mail size={22} />,
+    label: 'E-mail',
+    detail: EMAIL,
+    iconBg: 'bg-primary/10 text-primary',
+    borderColor: 'border-gray-200 hover:border-primary/30',
+    hoverBg: 'hover:bg-primary/5',
+  },
+  {
+    href: `tel:${PHONE_LINK}`,
+    icon: <Phone size={22} />,
+    label: 'Bellen',
+    detail: PHONE,
+    iconBg: 'bg-primary/10 text-primary',
+    borderColor: 'border-gray-200 hover:border-primary/30',
+    hoverBg: 'hover:bg-primary/5',
+  },
+  {
+    href: WHATSAPP_LINK,
+    icon: <WhatsAppIcon size={22} />,
+    label: 'WhatsApp',
+    detail: 'Stuur een bericht',
+    iconBg: 'bg-[#25D366] text-white shadow-sm shadow-[#25D366]/30',
+    borderColor: 'border-[#25D366]/30 hover:border-[#25D366]',
+    hoverBg: 'hover:bg-[#25D366]/10',
+    external: true,
+  },
+  {
+    href: INSTAGRAM_LINK,
+    icon: <Instagram size={22} />,
+    label: 'Instagram',
+    detail: '@rijschooldynamiek',
+    iconBg: 'bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white shadow-sm shadow-[#DD2A7B]/30',
+    borderColor: 'border-[#DD2A7B]/20 hover:border-[#DD2A7B]/50',
+    hoverBg: 'hover:bg-[#DD2A7B]/5',
+    external: true,
+  },
+];
+
+function ContactModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open, onClose]);
+
+  return createPortal(
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
         >
-          <div
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+          <motion.div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+
+          <motion.div
+            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <h2 id="contact-modal-title" className="text-lg font-bold text-gray-900">
-                Contact
+                Neem contact op
               </h2>
               <button
                 type="button"
-                onClick={() => setContactModalOpen(false)}
-                className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                onClick={onClose}
+                className="p-2 -mr-1 rounded-xl text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
                 aria-label="Sluiten"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
-            <div className="p-6 space-y-3">
-              <a
-                href={`mailto:${EMAIL}`}
-                className="flex items-center gap-4 rounded-xl border border-gray-200 p-4 text-gray-800 hover:bg-primary/5 hover:border-primary/20 transition-colors"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Mail size={24} />
-                </span>
-                <div className="min-w-0 flex-1 text-left">
-                  <p className="font-semibold text-gray-900">E-mail</p>
-                  <p className="text-sm text-gray-600 truncate">{EMAIL}</p>
-                </div>
-              </a>
-              <a
-                href={`tel:${PHONE_LINK}`}
-                className="flex items-center gap-4 rounded-xl border border-gray-200 p-4 text-gray-800 hover:bg-primary/5 hover:border-primary/20 transition-colors"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Phone size={24} />
-                </span>
-                <div className="min-w-0 flex-1 text-left">
-                  <p className="font-semibold text-gray-900">Bellen</p>
-                  <p className="text-sm text-gray-600">{PHONE}</p>
-                </div>
-              </a>
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-xl border border-[#25D366]/40 p-4 text-gray-800 hover:bg-[#25D366]/15 hover:border-[#25D366] transition-colors"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-white shadow-md shadow-[#25D366]/30">
-                  <WhatsAppIcon size={24} />
-                </span>
-                <div className="min-w-0 flex-1 text-left">
-                  <p className="font-semibold text-gray-900">WhatsApp</p>
-                  <p className="text-sm text-gray-600">Stuur een bericht</p>
-                </div>
-              </a>
+
+            <div className="p-4 space-y-2">
+              {contactOptions.map((opt) => (
+                <a
+                  key={opt.label}
+                  href={opt.href}
+                  {...(opt.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  onClick={onClose}
+                  className={`flex items-center gap-4 rounded-xl border p-3.5 transition-colors ${opt.borderColor} ${opt.hoverBg}`}
+                >
+                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${opt.iconBg}`}>
+                    {opt.icon}
+                  </span>
+                  <div className="min-w-0 flex-1 text-left">
+                    <p className="font-semibold text-gray-900 text-sm">{opt.label}</p>
+                    <p className="text-xs text-gray-500 truncate">{opt.detail}</p>
+                  </div>
+                </a>
+              ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </header>
+    </AnimatePresence>,
+    document.body,
   );
 }

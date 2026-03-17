@@ -32,6 +32,28 @@ export default function Hero() {
     );
   }, [showTrialForm]);
 
+  useEffect(() => {
+    if (!showTrialForm) return;
+
+    const prevOverflow = document.body.style.overflow;
+    const prevOverscroll = document.body.style.overscrollBehavior;
+
+    // Lock background scroll while the modal is open (prevents scroll + bounce on mobile).
+    document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowTrialForm(false);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prevOverflow;
+      document.body.style.overscrollBehavior = prevOverscroll;
+    };
+  }, [showTrialForm]);
+
   return (
     <section className="relative min-h-[100svh] min-h-screen flex items-center overflow-hidden">
       {/* Background Video with Overlay */}
