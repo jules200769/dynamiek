@@ -1,6 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+
+function useIsMobile(breakpoint = 768) {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    setMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setMobile(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, [breakpoint]);
+  return mobile;
+}
 import {
   ChevronDown,
   ArrowLeft,
@@ -168,23 +180,17 @@ function FaqAccordionItem({
   globalIndex,
   isOpen,
   onToggle,
+  isMobile,
 }: {
   faq: FaqItem;
   index: number;
   globalIndex: number;
   isOpen: boolean;
   onToggle: () => void;
+  isMobile: boolean;
 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-20px', amount: 0.15 }}
-      transition={{
-        duration: 0.45,
-        delay: index * 0.07,
-        ease: [0.34, 1.15, 0.64, 1],
-      }}
+  const wrapper = (
+    <div
       className={`rounded-2xl overflow-hidden transition-all duration-200 shadow-sm hover:shadow-md ${
         isOpen
           ? 'bg-white border-2 border-primary/15 ring-2 ring-secondary/20'
@@ -224,29 +230,63 @@ function FaqAccordionItem({
           <ChevronDown size={20} />
         </span>
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="px-5 pb-5 md:px-6 md:pb-6 pt-0 ml-12 md:ml-14 border-l-4 border-secondary bg-amber-50/40">
+
+      {isMobile ? (
+        <div
+          className="grid transition-[grid-template-rows] duration-200 ease-out"
+          style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+        >
+          <div className="overflow-hidden">
+            <div className="px-5 pb-5 pt-0 ml-12 border-l-4 border-secondary bg-amber-50/40">
               <p className="text-gray-700 leading-relaxed text-base pt-4">
                 {faq.answer}
               </p>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      ) : (
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="px-5 pb-5 md:px-6 md:pb-6 pt-0 ml-14 border-l-4 border-secondary bg-amber-50/40">
+                <p className="text-gray-700 leading-relaxed text-base pt-4">
+                  {faq.answer}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+    </div>
+  );
+
+  if (isMobile) return wrapper;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-20px', amount: 0.15 }}
+      transition={{
+        duration: 0.45,
+        delay: index * 0.07,
+        ease: [0.34, 1.15, 0.64, 1],
+      }}
+    >
+      {wrapper}
     </motion.div>
   );
 }
 
 export default function VeelGesteldeVragen() {
   const [openKey, setOpenKey] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   let globalCounter = 0;
 
@@ -408,6 +448,7 @@ export default function VeelGesteldeVragen() {
                             onToggle={() =>
                               setOpenKey(openKey === key ? null : key)
                             }
+                            isMobile={isMobile}
                           />
                         );
                       })}
