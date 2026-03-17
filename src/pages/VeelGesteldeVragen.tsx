@@ -48,6 +48,26 @@ const faqGroups: FaqGroup[] = [
         answer:
           'Vaak kun je binnen een paar dagen al je eerste (proef)les inplannen. We kijken naar jouw agenda en die van de instructeur. Wil je snel starten? Vraag een proefles aan of bel ons direct voor de eerste beschikbare datum.',
       },
+      {
+        question: 'Vanaf welke leeftijd mag ik rijlessen nemen?',
+        answer:
+          'Je mag op je 16e al starten met rijlessen. Het praktijkexamen mag je afleggen vanaf 17 jaar. Veel leerlingen beginnen vroeg zodat ze op hun 18e direct zelfstandig de weg op kunnen. Wij adviseren je graag over het beste moment om te starten.',
+      },
+      {
+        question: 'Wat moet ik meenemen naar mijn eerste rijles?',
+        answer:
+          'Neem een geldig identiteitsbewijs mee (paspoort, ID-kaart of rijbewijs). Draag comfortabele kleding en schoenen waarmee je goed de pedalen kunt bedienen. Hoge hakken of slippers raden we af. Verder zorgen wij voor alles!',
+      },
+      {
+        question: 'Kan ik mijn rijlessen op elk moment pauzeren of stoppen?',
+        answer:
+          'Ja, bij Rijschool Dynamiek zit je nergens aan vast. Je kunt je lessen pauzeren, bijvoorbeeld voor vakantie of een drukke periode, en later weer oppakken. Neem contact met ons op als je je schema wilt aanpassen.',
+      },
+      {
+        question: 'In welk gebied geeft Rijschool Dynamiek les?',
+        answer:
+          'Wij geven rijlessen in de regio en omgeving. We halen je op vanaf een afgesproken locatie, bijvoorbeeld thuis, school of werk. Zo kun je direct en zonder gedoe beginnen met je les.',
+      },
     ],
   },
   {
@@ -71,6 +91,26 @@ const faqGroups: FaqGroup[] = [
         question: 'Kan ik losse lessen nemen of moet ik een pakket kiezen?',
         answer:
           'Beide kan. Je kunt losse lessen boeken als je flexibel wilt blijven, of een pakket nemen voor een voordeligere prijs en meer zekerheid. Op de Tarieven-pagina vind je alle pakketten en de prijs voor een losse les.',
+      },
+      {
+        question: 'Hoe lang duurt een rijles?',
+        answer:
+          'Een standaard rijles duurt 60 minuten. Dit is inclusief het instappen en een korte nabespreking. Wil je sneller vooruitgang boeken? Dan kun je ook dubbele lessen van 120 minuten plannen, ideaal voor intensieve trajecten.',
+      },
+      {
+        question: 'Wat is het verschil tussen een lespakket en losse lessen?',
+        answer:
+          'Met een lespakket betaal je een vast bedrag voor een aantal lessen, vaak met korting ten opzichte van losse lessen. Pakketten bevatten soms ook het examen. Losse lessen zijn flexibeler: je betaalt per les en zit nergens aan vast.',
+      },
+      {
+        question: 'Zijn er extra kosten waar ik rekening mee moet houden?',
+        answer:
+          'Naast de lessen betaal je voor je theorie- en praktijkexamen aan het CBR, en eventueel voor theoriemateriaal. Deze kosten staan los van onze lesprijzen. We zijn altijd transparant over alle kosten, zodat je niet voor verrassingen komt te staan.',
+      },
+      {
+        question: 'Kan ik ook een spoedcursus of intensief traject volgen?',
+        answer:
+          'Ja, wij bieden intensieve trajecten aan waarbij je meerdere keren per week lesrijdt. Zo kun je in korte tijd je rijbewijs halen. Ideaal als je snel je rijbewijs nodig hebt. Neem contact op om de mogelijkheden te bespreken.',
       },
     ],
   },
@@ -102,6 +142,21 @@ const faqGroups: FaqGroup[] = [
           'Wat als ik niet slaag voor mijn praktijkexamen (herexamen)?',
         answer:
           'Geen zorgen: je kunt gewoon opnieuw examen doen. Sommige pakketten bevatten al een herexamen. Anders boeken we een nieuw examen in. We kijken samen wat er misging en oefenen gericht tot je klaar bent voor een volgende poging.',
+      },
+      {
+        question: 'Hoe kan ik mij voorbereiden op het theorie-examen?',
+        answer:
+          'Er zijn diverse online platforms en apps waarmee je kunt oefenen, zoals theorie-examen.nl of iTheorie. Wij raden aan om minimaal alle oefenexamens te halen voordat je het echte examen inplant. Heb je vragen? We denken graag met je mee.',
+      },
+      {
+        question: 'Wat gebeurt er als ik te laat ben voor mijn examen?',
+        answer:
+          'Als je te laat komt bij het CBR gaat je examen helaas niet door en ben je de kosten kwijt. Daarom plannen wij altijd ruim op tijd in en zorgen we dat je op tijd bij het examencentrum bent. Je instructeur rijdt je er in de meeste gevallen naartoe.',
+      },
+      {
+        question: 'Hoe hoog is het slagingspercentage bij Rijschool Dynamiek?',
+        answer:
+          'Wij zijn trots op ons hoge slagingspercentage, dat ruim boven het landelijk gemiddelde ligt. Dit komt door persoonlijke begeleiding, goed lesmateriaal en een instructeur die pas examen inplant als je er écht klaar voor bent.',
       },
     ],
   },
