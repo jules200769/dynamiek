@@ -33,7 +33,7 @@ export default function Hero() {
   }, [showTrialForm]);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-[100svh] min-h-screen flex items-center overflow-hidden">
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
         {/* Mobile-only hero video */}
@@ -43,7 +43,7 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover md:hidden"
+          className="absolute inset-0 w-full h-full object-cover md:hidden scale-[1.16] origin-center"
           aria-label="Hero achtergrond (mobiel)"
         />
         {/* Desktop hero video */}
@@ -169,7 +169,7 @@ export default function Hero() {
 
             <a
               href="#contact"
-              className="order-4 lg:order-3 inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-colors text-base"
+              className="order-4 lg:order-3 inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-colors text-base relative z-30 mb-10 sm:mb-14 lg:mb-0 -translate-y-8 sm:-translate-y-6 lg:translate-y-0"
             >
               Neem contact op &rsaquo;
             </a>
