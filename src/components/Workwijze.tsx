@@ -61,12 +61,12 @@ export default function Workwijze() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="lg:w-1/2 rounded-l-3xl overflow-hidden min-h-[420px] mx-4 sm:mx-6 lg:mx-0 lg:rounded-r-none"
+          className="lg:w-1/2 relative rounded-3xl overflow-hidden mx-4 sm:mx-6 lg:mx-0 aspect-[16/10]"
         >
           <img
             src="/waarom-achtergrond.jpg"
             alt="Interieur lesvoertuig Rijschool Dynamiek"
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </motion.div>
 
