@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Mail, Phone } from 'lucide-react';
+import { Menu, X, Mail, Phone, Instagram } from 'lucide-react';
 import { WhatsAppIcon } from './FloatingActions';
 import LogoDynamiek from '@/src/assets/logo-dynamiek.png';
 
@@ -8,10 +8,11 @@ const EMAIL = 'info@rijschooldynamiek.nl';
 const PHONE = '06 - 4859 2704';
 const PHONE_LINK = '+31648592704';
 const WHATSAPP_LINK = 'https://wa.me/31648592704';
+const INSTAGRAM_LINK = 'https://www.instagram.com/rijschooldynamiek/';
 
 const navLinks = [
   { label: 'Home', to: '/' },
-  { label: 'Tarievenn', to: '/rijlessen' },
+  { label: 'Tarieven', to: '/rijlessen' },
   { label: 'Veel gestelde vragen', to: '/veel-gestelde-vragen' },
 ];
 
@@ -105,19 +106,32 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className="text-xs font-bold uppercase tracking-[0.15em] text-gray-700 transition-colors hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="hidden items-center gap-5 lg:flex ml-auto">
+          <nav className="flex items-center gap-6">
+            {navLinks.map((link) => (
+              <div key={link.label} className="flex items-center gap-3">
+                {link.to === '/' && (
+                  <a
+                    href={INSTAGRAM_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="inline-flex items-center justify-center rounded-lg p-1.5 text-gray-600 transition-colors hover:bg-primary/5 hover:text-primary"
+                    title="Instagram"
+                  >
+                    <Instagram size={18} />
+                  </a>
+                )}
+                <Link
+                  to={link.to}
+                  className="text-xs font-bold uppercase tracking-[0.15em] text-gray-700 transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              </div>
+            ))}
+          </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
           <button
             type="button"
             onClick={() => setContactModalOpen(true)}
@@ -141,13 +155,26 @@ export default function Navbar() {
         <div className="mx-auto mt-2 max-w-7xl rounded-2xl border border-gray-100 bg-white p-4 shadow-xl shadow-slate-900/10 lg:hidden">
           <nav className="flex flex-col gap-1">
             {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                className="rounded-lg px-3 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 hover:text-primary"
-              >
-                {link.label}
-              </Link>
+              <div key={link.label} className="flex items-center justify-between rounded-lg hover:bg-gray-50">
+                {link.to === '/' && (
+                  <a
+                    href={INSTAGRAM_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="ml-2 inline-flex items-center justify-center rounded-lg p-2 text-gray-600 transition-colors hover:text-primary"
+                    title="Instagram"
+                  >
+                    <Instagram size={20} />
+                  </a>
+                )}
+                <Link
+                  to={link.to}
+                  className="flex-1 px-3 py-3 text-sm font-semibold text-gray-700 transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              </div>
             ))}
           </nav>
           <div className="mt-4 grid gap-2">
