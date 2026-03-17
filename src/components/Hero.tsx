@@ -167,12 +167,10 @@ export default function Hero() {
               ))}
             </ul>
 
-            <a
-              href="#contact"
-              className="order-4 lg:order-3 inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-xl transition-colors text-base relative z-30 mb-10 sm:mb-14 lg:mb-0 -translate-y-8 sm:-translate-y-6 lg:translate-y-0"
-            >
-              Neem contact op &rsaquo;
-            </a>
+            {/*
+              Removed per request: secondary "Neem contact op" CTA in hero.
+              Primary CTA is the "Gratis proefles aanvragen" button.
+            */}
           </motion.div>
 
           {/* Right: CTA knop (alleen desktop; op mobile staat de knop tussen h1 en GlassSurface zonder Magnet) */}
