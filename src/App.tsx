@@ -42,7 +42,9 @@ export default function App() {
             element={
               <>
                 <Hero />
-                <USPScroller />
+                <div className="hidden lg:block">
+                  <USPScroller />
+                </div>
                 <Services />
                 <Workwijze />
                 <WhyUs />

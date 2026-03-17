@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import USPScroller from './USPScroller';
 
 const modules = [
   'Module 1: Voertuigbediening en beheersing',
@@ -10,7 +11,10 @@ const modules = [
 
 export default function Workwijze() {
   return (
-    <section id="werkwijze" className="py-24 bg-[linear-gradient(to_bottom,#0b2648_0%,#0b2648_50%,white_100%)] overflow-hidden">
+    <section
+      id="werkwijze"
+      className="relative z-20 -mt-12 sm:-mt-16 pt-4 pb-24 lg:mt-0 lg:py-24 bg-[linear-gradient(to_bottom,#0b2648_0%,#0b2648_50%,white_100%)] overflow-visible lg:overflow-hidden"
+    >
       <div className="flex flex-col lg:flex-row items-stretch gap-10">
 
         {/* Left — aligned with container */}
@@ -23,7 +27,7 @@ export default function Workwijze() {
                      mx-4 sm:mx-6 lg:ml-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:mr-0"
         >
           {/* Blue card */}
-          <div className="bg-blue-50 rounded-3xl p-10">
+          <div className="relative z-30 bg-blue-50 rounded-3xl p-10 -mt-20 sm:-mt-24 lg:mt-0 shadow-2xl">
             <h2 className="text-blue-600 font-bold tracking-wider uppercase text-sm mb-3">Werkwijze</h2>
             <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">
               Dynamisch Leren Rijden in stappen
@@ -54,6 +58,11 @@ export default function Workwijze() {
             </a>
           </div>
         </motion.div>
+
+        {/* USP balk (mobile) tussen de 2 kolommen */}
+        <div className="lg:hidden">
+          <USPScroller />
+        </div>
 
         {/* Right image — touches right viewport edge */}
         <motion.div
