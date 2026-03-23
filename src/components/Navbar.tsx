@@ -11,6 +11,7 @@ const PHONE = '06 - 4859 2704';
 const PHONE_LINK = '+31648592704';
 const WHATSAPP_LINK = 'https://wa.me/31648592704';
 const INSTAGRAM_LINK = 'https://www.instagram.com/rijschooldynamiek/';
+const LOGIN_LINK = '/login';
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -134,13 +135,21 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <button
-            type="button"
-            onClick={() => setContactModalOpen(true)}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
-          >
-            Contact
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setContactModalOpen(true)}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
+            >
+              Contact
+            </button>
+            <Link
+              to={LOGIN_LINK}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
+            >
+              Log in
+            </Link>
+          </div>
         </div>
 
         <button
@@ -187,6 +196,13 @@ export default function Navbar() {
             >
               Contact
             </button>
+            <Link
+              to={LOGIN_LINK}
+              onClick={() => setMenuOpen(false)}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
+            >
+              Log in
+            </Link>
           </div>
         </div>
       )}

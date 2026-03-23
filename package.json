@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
     "@google/genai": "^1.29.0",
+    "@supabase/supabase-js": "^2.100.0",
     "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
     "class-variance-authority": "^0.7.1",
@@ -35,6 +36,7 @@
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.21",
     "sharp": "^0.34.5",
+    "supabase": "^2.83.0",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
