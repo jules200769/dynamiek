@@ -1,6 +1,6 @@
-import { Bell, LogOut } from 'lucide-react';
+import { Bell, LogOut, MoreHorizontal } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { PortalProvider, usePortal } from './PortalContext';
 import { portalNavItems } from './portalNav';
 import { useAuth } from '@/src/components/auth/AuthContext';
@@ -9,6 +9,74 @@ function crumbsFromPath(pathname: string) {
   const parts = pathname.split('/').filter(Boolean);
   if (parts.length <= 1) return ['Portaal'];
   return ['Portaal', ...parts.slice(1).map((part) => part.charAt(0).toUpperCase() + part.slice(1))];
+}
+
+const PRIMARY_COUNT = 4;
+
+function MobileNav() {
+  const [moreOpen, setMoreOpen] = useState(false);
+  const primary = portalNavItems.slice(0, PRIMARY_COUNT);
+  const overflow = portalNavItems.slice(PRIMARY_COUNT);
+
+  return (
+    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden">
+      {moreOpen ? (
+        <div className="border-b border-slate-200 bg-white px-4 py-2">
+          <div className="mx-auto grid max-w-2xl grid-cols-3 gap-1">
+            {overflow.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMoreOpen(false)}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
+                      isActive ? 'bg-primary/10 text-primary' : 'text-slate-600'
+                    }`
+                  }
+                >
+                  <Icon size={16} />
+                  {item.label}
+                </NavLink>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+      <div className="mx-auto grid max-w-2xl grid-cols-5 gap-1 p-2">
+        {primary.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === '/portaal'}
+              onClick={() => setMoreOpen(false)}
+              className={({ isActive }) =>
+                `flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
+                  isActive ? 'bg-primary/10 text-primary' : 'text-slate-600'
+                }`
+              }
+            >
+              <Icon size={16} />
+              {item.label}
+            </NavLink>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => setMoreOpen((v) => !v)}
+          className={`flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
+            moreOpen ? 'bg-primary/10 text-primary' : 'text-slate-600'
+          }`}
+        >
+          <MoreHorizontal size={16} />
+          Meer
+        </button>
+      </div>
+    </nav>
+  );
 }
 
 function PortalShell() {
@@ -92,28 +160,7 @@ function PortalShell() {
         </div>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-white/95 p-2 backdrop-blur lg:hidden">
-        <div className="mx-auto grid max-w-2xl grid-cols-4 gap-1">
-          {portalNavItems.slice(0, 4).map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/portaal'}
-                className={({ isActive }) =>
-                  `flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
-                    isActive ? 'bg-primary/10 text-primary' : 'text-slate-600'
-                  }`
-                }
-              >
-                <Icon size={16} />
-                {item.label}
-              </NavLink>
-            );
-          })}
-        </div>
-      </nav>
+      <MobileNav />
     </div>
   );
 }

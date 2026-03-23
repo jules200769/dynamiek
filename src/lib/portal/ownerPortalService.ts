@@ -4,6 +4,7 @@ import type {
   UpdateInvoiceStatusInput,
   UpdateLessonStatusInput,
 } from '@/src/types/ownerPortal';
+import type { ChecklistStatus, ProgressLevel, ProgressTrend } from '@/src/types/portal';
 import { supabase } from '@/src/lib/supabase/client';
 import { loadOwnerPortalDataFromDb } from '@/src/lib/portal/supabaseData';
 
@@ -75,6 +76,102 @@ export const ownerPortalService = {
   async setInternalNote(studentId: string, note: string) {
     const { error } = await supabase.from('students').update({ internal_note: note }).eq('id', studentId);
     if (error) throw error;
+
+    await supabase.from('sync_events').insert({
+      student_id: studentId,
+      entity: 'profile',
+      action: 'update',
+    });
+
+    return loadOwnerPortalDataFromDb();
+  },
+
+  async createProgressItem(
+    studentId: string,
+    skill: string,
+    level: ProgressLevel,
+    trend: ProgressTrend,
+    note: string,
+  ) {
+    const { error } = await supabase.from('progress_items').insert({
+      student_id: studentId,
+      skill: skill.trim(),
+      level,
+      trend,
+      note: note.trim(),
+    });
+    if (error) throw error;
+
+    await supabase.from('sync_events').insert({
+      student_id: studentId,
+      entity: 'progress',
+      action: 'create',
+    });
+
+    return loadOwnerPortalDataFromDb();
+  },
+
+  async updateProgressItem(itemId: string, studentId: string, level: ProgressLevel, trend: ProgressTrend, note: string) {
+    const { error } = await supabase
+      .from('progress_items')
+      .update({ level, trend, note })
+      .eq('id', itemId)
+      .eq('student_id', studentId);
+    if (error) throw error;
+
+    await supabase.from('sync_events').insert({
+      student_id: studentId,
+      entity: 'progress',
+      action: 'update',
+    });
+
+    return loadOwnerPortalDataFromDb();
+  },
+
+  async createChecklistItem(studentId: string, requirement: string, status: ChecklistStatus, advice: string | null) {
+    const { error } = await supabase.from('checklist_items').insert({
+      student_id: studentId,
+      requirement: requirement.trim(),
+      status,
+      advice: advice?.trim() || null,
+    });
+    if (error) throw error;
+
+    await supabase.from('sync_events').insert({
+      student_id: studentId,
+      entity: 'progress',
+      action: 'create',
+    });
+
+    return loadOwnerPortalDataFromDb();
+  },
+
+  async updateChecklistItem(itemId: string, studentId: string, status: ChecklistStatus, advice: string | null) {
+    const { error } = await supabase
+      .from('checklist_items')
+      .update({ status, advice })
+      .eq('id', itemId)
+      .eq('student_id', studentId);
+    if (error) throw error;
+
+    await supabase.from('sync_events').insert({
+      student_id: studentId,
+      entity: 'progress',
+      action: 'update',
+    });
+
+    return loadOwnerPortalDataFromDb();
+  },
+
+  async sendOwnerMessage(threadId: string, studentId: string, body: string) {
+    const { error } = await supabase.from('messages').insert({
+      thread_id: threadId,
+      sender: 'Rijschool',
+      body,
+    });
+    if (error) throw error;
+
+    await supabase.from('message_threads').update({ unread_count: 0 }).eq('id', threadId).eq('student_id', studentId);
 
     await supabase.from('sync_events').insert({
       student_id: studentId,

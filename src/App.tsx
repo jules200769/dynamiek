@@ -42,6 +42,7 @@ import OwnerProgressPage from './pages/owner-portal/Progress';
 import OwnerBillingPage from './pages/owner-portal/Billing';
 import OwnerMessagesPage from './pages/owner-portal/Messages';
 import OwnerCalendarSyncPage from './pages/owner-portal/CalendarSync';
+import HostLogin from './pages/owner-portal/HostLogin';
 import { RequireAuth, RequireOwner } from './components/auth/RouteGuards';
 
 function ScrollToTop() {
@@ -113,6 +114,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<LoginGateway />} />
+      <Route path="/hosts" element={<HostLogin />} />
       <Route
         path="/portaal"
         element={
@@ -159,7 +161,8 @@ export default function App() {
     () =>
       location.pathname.startsWith('/portaal') ||
       location.pathname.startsWith('/owner') ||
-      location.pathname.startsWith('/login'),
+      location.pathname.startsWith('/login') ||
+      location.pathname.startsWith('/hosts'),
     [location.pathname],
   );
 

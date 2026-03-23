@@ -21,9 +21,13 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-async function fetchProfile(userId: string): Promise<Profile | null> {
+async function fetchProfile(userId: string, retries = 0): Promise<Profile | null> {
   const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
   if (error) throw error;
+  if (!data && retries < 5) {
+    await new Promise((resolve) => setTimeout(resolve, 400 * (retries + 1)));
+    return fetchProfile(userId, retries + 1);
+  }
   return data;
 }
 
@@ -44,36 +48,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let isMounted = true;
+
+    const applySession = async (nextSession: Session | null) => {
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+      if (!nextSession?.user) {
+        setProfile(null);
+        return;
+      }
+      try {
+        const profileData = await fetchProfile(nextSession.user.id);
+        if (isMounted) setProfile(profileData);
+      } catch {
+        if (isMounted) setProfile(null);
+      }
+    };
+
+    // Eerste load: wacht tot profiel binnen is voordat loading false — zo beslist RequireOwner nooit met role=null.
     void supabase.auth.getSession().then(async ({ data, error }) => {
       if (!isMounted) return;
       if (error) {
         setLoading(false);
         return;
       }
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
-      if (data.session?.user) {
-        try {
-          const profileData = await fetchProfile(data.session.user.id);
-          if (isMounted) setProfile(profileData);
-        } catch {
-          if (isMounted) setProfile(null);
-        }
-      }
+      await applySession(data.session);
       if (isMounted) setLoading(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
-      setUser(nextSession?.user ?? null);
-      if (!nextSession?.user) {
-        setProfile(null);
-      } else {
-        void fetchProfile(nextSession.user.id)
-          .then((nextProfile) => setProfile(nextProfile))
-          .catch(() => setProfile(null));
+    const { data: listener } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      // Supabase stuurt direct INITIAL_SESSION; getSession hierboven doet dezelfde bootstrap.
+      // Overslaan voorkomt dubbele fetch + korte loading=true waardoor guards opnieuw flitsen.
+      if (event === 'INITIAL_SESSION') {
+        return;
       }
-      setLoading(false);
+      void (async () => {
+        if (!isMounted) return;
+        setLoading(true);
+        await applySession(nextSession);
+        if (isMounted) setLoading(false);
+      })();
     });
 
     return () => {

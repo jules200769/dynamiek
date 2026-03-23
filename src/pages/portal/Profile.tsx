@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import EmptyState from '@/src/components/portal/EmptyState';
 import LoadingSkeleton from '@/src/components/portal/LoadingSkeleton';
 import PageHeader from '@/src/components/portal/PageHeader';
@@ -24,6 +24,9 @@ function getUploadStatus(nextFile: File): StudentDocument['status'] {
   return 'uploaded';
 }
 
+/** Static list — must not use hooks after loading/error early returns (Rules of Hooks). */
+const REQUIRED_PROFILE_FIELDS: (keyof StudentProfile)[] = ['fullName', 'dateOfBirth', 'phone', 'email'];
+
 export default function PortalProfilePage() {
   const { data, loading, error, saveProfile, updateDocuments } = usePortal();
   const [editing, setEditing] = useState(false);
@@ -32,6 +35,7 @@ export default function PortalProfilePage() {
 
   const [draft, setDraft] = useState<StudentProfile | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof StudentProfile, string>>>({});
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   if (loading) {
     return (
@@ -49,16 +53,12 @@ export default function PortalProfilePage() {
   const profile = draft ?? data.profile;
   const docs = data.documents;
 
-  const requiredFields: (keyof StudentProfile)[] = useMemo(
-    () => ['fullName', 'dateOfBirth', 'phone', 'email'],
-    [],
-  );
-
   const handleStartEdit = () => {
     setDraft({ ...data.profile });
     setEditing(true);
     setFieldErrors({});
     setSavedLabel(null);
+    setSaveError(null);
   };
 
   const handleSave = async () => {
@@ -68,11 +68,49 @@ export default function PortalProfilePage() {
     if (Object.keys(errors).length > 0) return;
 
     setSaving(true);
-    await saveProfile(draft);
-    setSaving(false);
-    setEditing(false);
-    setDraft(null);
-    setSavedLabel('Profiel opgeslagen.');
+    setSaveError(null);
+    // #region agent log
+    fetch('http://127.0.0.1:7620/ingest/3700e228-2541-4bc9-8154-c88faffd3439', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '19c8fa' },
+      body: JSON.stringify({
+        sessionId: '19c8fa',
+        runId: 'profile-save',
+        hypothesisId: 'H400',
+        location: 'Profile.tsx:handleSave',
+        message: 'saveProfile attempt',
+        data: { hasDraft: true },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+    // #endregion
+    try {
+      await saveProfile(draft);
+      setEditing(false);
+      setDraft(null);
+      setSavedLabel('Profiel opgeslagen.');
+    } catch (err: unknown) {
+      const e = err as { message?: string; details?: string; hint?: string };
+      const msg = e.details || e.message || e.hint || 'Opslaan mislukt. Probeer het opnieuw.';
+      setSaveError(String(msg));
+      // #region agent log
+      fetch('http://127.0.0.1:7620/ingest/3700e228-2541-4bc9-8154-c88faffd3439', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '19c8fa' },
+        body: JSON.stringify({
+          sessionId: '19c8fa',
+          runId: 'profile-save',
+          hypothesisId: 'H400',
+          location: 'Profile.tsx:handleSave:catch',
+          message: 'saveProfile failed',
+          data: { errType: err?.constructor?.name },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {});
+      // #endregion
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleCancel = () => {
@@ -140,6 +178,7 @@ export default function PortalProfilePage() {
       />
 
       {savedLabel ? <div className="rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm text-emerald-800">{savedLabel}</div> : null}
+      {saveError ? <div className="rounded-xl border border-rose-300 bg-rose-50 px-4 py-2 text-sm text-rose-800">{saveError}</div> : null}
 
       <div className="grid gap-4 xl:grid-cols-2">
         <SectionCard title="Basisprofiel" subtitle="Naam, adres, geboortedatum en contact">
@@ -169,7 +208,7 @@ export default function PortalProfilePage() {
             ))}
           </div>
           <div className="mt-3 rounded-xl bg-slate-50 p-3 text-xs text-slate-600">
-            Verplicht: {requiredFields.join(', ')}
+            Verplicht: {REQUIRED_PROFILE_FIELDS.join(', ')}
           </div>
         </SectionCard>
 

@@ -30,7 +30,7 @@ export function RequireOwner({ children }: { children: ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+    return <Navigate to="/hosts" replace state={{ from: location.pathname }} />;
   }
 
   if (role !== 'owner') {

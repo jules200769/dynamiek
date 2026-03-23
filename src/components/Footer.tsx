@@ -102,7 +102,15 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition-colors">Algemene Voorwaarden</a>
             <a href="#" className="hover:text-white transition-colors">Cookies</a>
           </div>
-          <p>Ontwikkeld door Julez Roelen</p>
+          <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <span>Ontwikkeld door Julez Roelen</span>
+            <span className="text-blue-400/80" aria-hidden>
+              ·
+            </span>
+            <Link to="/hosts" className="text-[10px] uppercase tracking-widest text-blue-400/70 hover:text-blue-200">
+              hosts
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

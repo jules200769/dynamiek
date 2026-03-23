@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useOwnerPortal } from '@/src/components/owner-portal/OwnerPortalContext';
 import EmptyState from '@/src/components/portal/EmptyState';
@@ -13,9 +13,12 @@ export default function OwnerStudentDetailPage() {
   const { loading, data, findStudentById, setInternalNote } = useOwnerPortal();
   const student = studentId ? findStudentById(studentId) : null;
   const [note, setNote] = useState(student?.internalNote ?? '');
+  const isDirty = useRef(false);
 
   useEffect(() => {
-    setNote(student?.internalNote ?? '');
+    if (!isDirty.current) {
+      setNote(student?.internalNote ?? '');
+    }
   }, [student?.internalNote]);
 
   if (loading) {
@@ -94,13 +97,20 @@ export default function OwnerStudentDetailPage() {
         <div className="space-y-2">
           <textarea
             value={note}
-            onChange={(event) => setNote(event.target.value)}
+            onChange={(event) => {
+              isDirty.current = true;
+              setNote(event.target.value);
+            }}
             rows={3}
             className="w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-700"
           />
           <button
             type="button"
-            onClick={() => void setInternalNote(student.id, note)}
+            onClick={() => {
+              void setInternalNote(student.id, note).then(() => {
+                isDirty.current = false;
+              });
+            }}
             className="rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-white hover:bg-primary-dark"
           >
             Notitie opslaan

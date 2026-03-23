@@ -1,6 +1,6 @@
-import { Bell, LogOut } from 'lucide-react';
+import { Bell, LogOut, MoreHorizontal } from 'lucide-react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { OwnerPortalProvider, useOwnerPortal } from './OwnerPortalContext';
 import { ownerNavItems } from './ownerNav';
 import { useAuth } from '@/src/components/auth/AuthContext';
@@ -11,11 +11,79 @@ function crumbsFromPath(pathname: string) {
   return ['Owner portaal', ...parts.slice(1).map((part) => part.charAt(0).toUpperCase() + part.slice(1))];
 }
 
+const OWNER_PRIMARY_COUNT = 5;
+
+function OwnerMobileNav() {
+  const [moreOpen, setMoreOpen] = useState(false);
+  const primary = ownerNavItems.slice(0, OWNER_PRIMARY_COUNT);
+  const overflow = ownerNavItems.slice(OWNER_PRIMARY_COUNT);
+
+  return (
+    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden">
+      {moreOpen ? (
+        <div className="border-b border-slate-200 bg-white px-4 py-2">
+          <div className="mx-auto grid max-w-2xl grid-cols-3 gap-1">
+            {overflow.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMoreOpen(false)}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
+                      isActive ? 'bg-primary/10 text-primary' : 'text-slate-600'
+                    }`
+                  }
+                >
+                  <Icon size={16} />
+                  {item.label}
+                </NavLink>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+      <div className="mx-auto grid max-w-2xl grid-cols-6 gap-1 p-2">
+        {primary.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === '/owner'}
+              onClick={() => setMoreOpen(false)}
+              className={({ isActive }) =>
+                `flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
+                  isActive ? 'bg-primary/10 text-primary' : 'text-slate-600'
+                }`
+              }
+            >
+              <Icon size={16} />
+              {item.label}
+            </NavLink>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => setMoreOpen((v) => !v)}
+          className={`flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
+            moreOpen ? 'bg-primary/10 text-primary' : 'text-slate-600'
+          }`}
+        >
+          <MoreHorizontal size={16} />
+          Meer
+        </button>
+      </div>
+    </nav>
+  );
+}
+
 function OwnerShell() {
   const navigate = useNavigate();
   const { signOut } = useAuth();
   const location = useLocation();
-  const { data } = useOwnerPortal();
+  const { data, actionError, clearActionError } = useOwnerPortal();
   const crumbs = useMemo(() => crumbsFromPath(location.pathname), [location.pathname]);
   const pendingSyncItems = data?.calendarSync.pendingItems ?? 0;
 
@@ -82,32 +150,20 @@ function OwnerShell() {
             </div>
           </header>
 
+          {actionError ? (
+            <div className="flex items-center justify-between rounded-xl border border-rose-300 bg-rose-50 px-4 py-2 text-sm text-rose-800">
+              <span>{actionError}</span>
+              <button type="button" onClick={clearActionError} className="ml-3 font-semibold text-rose-600 hover:text-rose-800">
+                Sluiten
+              </button>
+            </div>
+          ) : null}
+
           <Outlet />
         </div>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-white/95 p-2 backdrop-blur lg:hidden">
-        <div className="mx-auto grid max-w-2xl grid-cols-5 gap-1">
-          {ownerNavItems.slice(0, 5).map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/owner'}
-                className={({ isActive }) =>
-                  `flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold ${
-                    isActive ? 'bg-primary/10 text-primary' : 'text-slate-600'
-                  }`
-                }
-              >
-                <Icon size={16} />
-                {item.label}
-              </NavLink>
-            );
-          })}
-        </div>
-      </nav>
+      <OwnerMobileNav />
     </div>
   );
 }

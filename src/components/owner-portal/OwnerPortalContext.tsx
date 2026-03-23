@@ -10,17 +10,31 @@ import type {
   UpdateInvoiceStatusInput,
   UpdateLessonStatusInput,
 } from '@/src/types/ownerPortal';
+import type { ChecklistStatus, ProgressLevel, ProgressTrend } from '@/src/types/portal';
 
 type OwnerPortalContextValue = {
   data: OwnerPortalData | null;
   loading: boolean;
   error: string | null;
+  actionError: string | null;
+  clearActionError: () => void;
   reload: (scenario?: OwnerPortalScenario) => Promise<void>;
   findStudentById: (studentId: string) => OwnerStudentRecord | null;
   scheduleLesson: (input: NewPlannedLessonInput) => Promise<void>;
   updateLessonStatus: (input: UpdateLessonStatusInput) => Promise<void>;
   updateInvoiceStatus: (input: UpdateInvoiceStatusInput) => Promise<void>;
   setInternalNote: (studentId: string, note: string) => Promise<void>;
+  sendOwnerMessage: (threadId: string, studentId: string, body: string) => Promise<void>;
+  createProgressItem: (
+    studentId: string,
+    skill: string,
+    level: ProgressLevel,
+    trend: ProgressTrend,
+    note: string,
+  ) => Promise<void>;
+  updateProgressItem: (itemId: string, studentId: string, level: ProgressLevel, trend: ProgressTrend, note: string) => Promise<void>;
+  createChecklistItem: (studentId: string, requirement: string, status: ChecklistStatus, advice: string | null) => Promise<void>;
+  updateChecklistItem: (itemId: string, studentId: string, status: ChecklistStatus, advice: string | null) => Promise<void>;
   runCalendarSync: () => Promise<void>;
 };
 
@@ -30,6 +44,7 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<OwnerPortalData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   const reload = useCallback(async (_scenario: OwnerPortalScenario = 'normal') => {
     try {
@@ -88,48 +103,138 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
   }, [reload]);
 
   const scheduleLesson = async (input: NewPlannedLessonInput) => {
-    const updated = await ownerPortalService.scheduleLesson(input);
-    setData(updated);
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.scheduleLesson(input);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Les inplannen mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
   };
 
   const updateLessonStatus = async (input: UpdateLessonStatusInput) => {
-    const updated = await ownerPortalService.updateLessonStatus(input);
-    setData(updated);
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.updateLessonStatus(input);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Status wijzigen mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
   };
 
   const updateInvoiceStatus = async (input: UpdateInvoiceStatusInput) => {
-    const updated = await ownerPortalService.updateInvoiceStatus(input);
-    setData(updated);
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.updateInvoiceStatus(input);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Factuurstatus wijzigen mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
   };
 
   const setInternalNote = async (studentId: string, note: string) => {
-    const updated = await ownerPortalService.setInternalNote(studentId, note);
-    setData(updated);
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.setInternalNote(studentId, note);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Notitie opslaan mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
+  };
+
+  const createProgressItem = async (
+    studentId: string,
+    skill: string,
+    level: ProgressLevel,
+    trend: ProgressTrend,
+    note: string,
+  ) => {
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.createProgressItem(studentId, skill, level, trend, note);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Vaardigheid toevoegen mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
+  };
+
+  const updateProgressItem = async (itemId: string, studentId: string, level: ProgressLevel, trend: ProgressTrend, note: string) => {
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.updateProgressItem(itemId, studentId, level, trend, note);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Voortgang bijwerken mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
+  };
+
+  const createChecklistItem = async (studentId: string, requirement: string, status: ChecklistStatus, advice: string | null) => {
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.createChecklistItem(studentId, requirement, status, advice);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Checklistpunt toevoegen mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
+  };
+
+  const updateChecklistItem = async (itemId: string, studentId: string, status: ChecklistStatus, advice: string | null) => {
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.updateChecklistItem(itemId, studentId, status, advice);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Checklist bijwerken mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
+  };
+
+  const sendOwnerMessage = async (threadId: string, studentId: string, body: string) => {
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.sendOwnerMessage(threadId, studentId, body);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Bericht versturen mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
   };
 
   const runCalendarSync = async () => {
-    const updated = await ownerPortalService.runCalendarSync();
-    setData(updated);
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.runCalendarSync();
+      setData(updated);
+    } catch (err) {
+      setActionError(`Calendar sync mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
   };
 
   const findStudentById = (studentId: string) => {
     return data?.students.find((student) => student.id === studentId) ?? null;
   };
 
+  const clearActionError = () => setActionError(null);
+
   const value = useMemo(
     () => ({
       data,
       loading,
       error,
+      actionError,
+      clearActionError,
       reload,
       findStudentById,
       scheduleLesson,
       updateLessonStatus,
       updateInvoiceStatus,
       setInternalNote,
+      sendOwnerMessage,
+      createProgressItem,
+      updateProgressItem,
+      createChecklistItem,
+      updateChecklistItem,
       runCalendarSync,
     }),
-    [data, loading, error, reload],
+    [data, loading, error, actionError, reload],
   );
 
   return <OwnerPortalContext.Provider value={value}>{children}</OwnerPortalContext.Provider>;

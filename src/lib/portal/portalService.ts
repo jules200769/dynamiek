@@ -8,7 +8,7 @@ import type {
   StudentProfile,
 } from '@/src/types/portal';
 import { supabase } from '@/src/lib/supabase/client';
-import { getCurrentStudentIdOrThrow, loadPortalDataFromDb } from '@/src/lib/portal/supabaseData';
+import { getCurrentAuthUser, getCurrentStudentIdOrThrow, loadPortalDataFromDb } from '@/src/lib/portal/supabaseData';
 
 export const portalService = {
   async loadData(): Promise<PortalData> {
@@ -16,7 +16,15 @@ export const portalService = {
   },
 
   async saveProfile(profile: StudentProfile) {
-    const studentId = await getCurrentStudentIdOrThrow();
+    const [studentId, authUser] = await Promise.all([
+      getCurrentStudentIdOrThrow(),
+      getCurrentAuthUser(),
+    ]);
+    const allowedHealth = ['Ingediend', 'Goedgekeurd', 'Ontbreekt', 'In behandeling'] as const;
+    const healthDeclarationStatus = (allowedHealth as readonly string[]).includes(profile.healthDeclarationStatus)
+      ? (profile.healthDeclarationStatus as (typeof allowedHealth)[number])
+      : 'Ontbreekt';
+
     const { error } = await supabase
       .from('students')
       .update({
@@ -24,17 +32,45 @@ export const portalService = {
         address: profile.address,
         city: profile.city,
         postal_code: profile.postalCode,
-        date_of_birth: profile.dateOfBirth || null,
+        date_of_birth: profile.dateOfBirth?.trim() ? profile.dateOfBirth : null,
         phone: profile.phone,
         email: profile.email,
         cbr_number: profile.cbrNumber,
         theory_certificate_number: profile.theoryCertificateNumber,
-        health_declaration_status: profile.healthDeclarationStatus,
+        health_declaration_status: healthDeclarationStatus,
         license_category: profile.licenseCategory,
-        training_start_date: profile.trainingStartDate || null,
+        training_start_date: profile.trainingStartDate?.trim() ? profile.trainingStartDate : null,
       })
       .eq('id', studentId);
-    if (error) throw error;
+    if (error) {
+      // #region agent log
+      fetch('http://127.0.0.1:7620/ingest/3700e228-2541-4bc9-8154-c88faffd3439', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '19c8fa' },
+        body: JSON.stringify({
+          sessionId: '19c8fa',
+          runId: 'profile-save',
+          hypothesisId: 'H400',
+          location: 'portalService.ts:saveProfile:students',
+          message: 'students update error',
+          data: { code: error.code, details: error.details, hint: error.hint },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {});
+      // #endregion
+      throw error;
+    }
+
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({
+        full_name: profile.fullName,
+        email: profile.email,
+        phone: profile.phone,
+      })
+      .eq('id', authUser.id);
+    if (profileError) throw profileError;
+
     return profile;
   },
 

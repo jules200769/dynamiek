@@ -3,32 +3,40 @@ import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/src/components/auth/AuthContext';
 
+/**
+ * Publieke inlog/aanmelding — alleen voor leerlingen (klantenportaal).
+ * Host/owner: zie footerlink "hosts" → /hosts
+ */
 export default function LoginGateway() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, role, signIn, signUp } = useAuth();
+  const { user, role, loading, signIn, signUp } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
-  const [signUpRole, setSignUpRole] = useState<'student' | 'owner'>('student');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (loading) return;
     if (!user) return;
+    if (role === 'owner') {
+      navigate('/owner', { replace: true });
+      return;
+    }
     const routeFromGuard = (location.state as { from?: string } | null)?.from;
-    if (routeFromGuard) {
+    if (routeFromGuard && routeFromGuard.startsWith('/portaal')) {
       navigate(routeFromGuard, { replace: true });
       return;
     }
-    navigate(role === 'owner' ? '/owner' : '/portaal', { replace: true });
-  }, [user, role, location.state, navigate]);
+    navigate('/portaal', { replace: true });
+  }, [user, role, loading, location.state, navigate]);
 
   const handleSubmit = async () => {
     setBusy(true);
     setError(null);
     const result =
-      mode === 'signin' ? await signIn(email.trim(), password) : await signUp(email.trim(), password, signUpRole);
+      mode === 'signin' ? await signIn(email.trim(), password) : await signUp(email.trim(), password, 'student');
     if (result.error) {
       setError(result.error);
     }
@@ -41,9 +49,9 @@ export default function LoginGateway() {
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
           <ShieldCheck size={28} />
         </div>
-        <h1 className="mt-4 text-center text-3xl font-black tracking-tight text-slate-900">Inloggen</h1>
+        <h1 className="mt-4 text-center text-3xl font-black tracking-tight text-slate-900">Klantenportaal</h1>
         <p className="mx-auto mt-3 max-w-lg text-center text-sm text-slate-600">
-          Log in op het studentenportaal of owner-portaal. Owner gebruikers krijgen automatisch extra rechten.
+          Inloggen of aanmelden als leerling. Je planning, facturen en berichten op één plek.
         </p>
 
         <div className="mt-8 grid gap-3">
@@ -85,23 +93,9 @@ export default function LoginGateway() {
                 mode === 'signup' ? 'bg-primary text-white' : 'border border-slate-200 text-slate-700'
               }`}
             >
-              Account maken
+              Aanmelden
             </button>
           </div>
-
-          {mode === 'signup' ? (
-            <label className="grid gap-1 text-sm">
-              <span className="font-medium text-slate-700">Nieuwe account rol</span>
-              <select
-                value={signUpRole}
-                onChange={(event) => setSignUpRole(event.target.value as 'student' | 'owner')}
-                className="rounded-xl border border-slate-200 px-3 py-2 text-sm"
-              >
-                <option value="student">Student</option>
-                <option value="owner">Owner</option>
-              </select>
-            </label>
-          ) : null}
 
           {error ? (
             <div className="rounded-xl border border-rose-300 bg-rose-50 px-4 py-2 text-sm text-rose-700">{error}</div>
@@ -110,10 +104,10 @@ export default function LoginGateway() {
           <button
             type="button"
             onClick={() => void handleSubmit()}
-            disabled={busy || !email.trim() || !password}
+            disabled={busy || !email.trim() || !password || loading}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
           >
-            {busy ? 'Bezig...' : mode === 'signin' ? 'Inloggen' : 'Account maken'}
+            {busy ? 'Bezig...' : mode === 'signin' ? 'Inloggen' : 'Account aanmaken'}
             <ArrowRight size={16} />
           </button>
 

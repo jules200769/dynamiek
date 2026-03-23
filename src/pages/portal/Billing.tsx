@@ -40,14 +40,18 @@ function CheckoutDialog({
   const selectedProduct = checkoutProducts.find((item) => item.id === productId) ?? checkoutProducts[0];
 
   const complete = async (success: boolean) => {
-    await onComplete({
-      productId: selectedProduct.id,
-      label: selectedProduct.label,
-      amount: selectedProduct.price,
-      paymentMethod,
-      success,
-    });
-    setSubmitState(success ? 'success' : 'error');
+    try {
+      await onComplete({
+        productId: selectedProduct.id,
+        label: selectedProduct.label,
+        amount: selectedProduct.price,
+        paymentMethod,
+        success,
+      });
+      setSubmitState(success ? 'success' : 'error');
+    } catch {
+      setSubmitState('error');
+    }
   };
 
   return (
@@ -157,6 +161,14 @@ export default function PortalBillingPage() {
   const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
+  const invoices = useMemo(
+    () =>
+      (data?.invoices ?? [])
+        .filter((invoice) => (filter === 'Alles' ? true : invoice.status === filter))
+        .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime()),
+    [data?.invoices, filter],
+  );
+
   if (loading) {
     return (
       <div className="space-y-4">
@@ -169,14 +181,6 @@ export default function PortalBillingPage() {
   if (error || !data) {
     return <EmptyState title="Betalingen niet beschikbaar" description={error ?? 'Geen data gevonden.'} />;
   }
-
-  const invoices = useMemo(
-    () =>
-      data.invoices
-        .filter((invoice) => (filter === 'Alles' ? true : invoice.status === filter))
-        .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime()),
-    [data.invoices, filter],
-  );
 
   const selectedInvoice: Invoice | null = invoices.find((invoice) => invoice.id === selectedInvoiceId) ?? invoices[0] ?? null;
   const paidCount = data.invoices.filter((invoice) => invoice.status === 'Betaald').length;
@@ -273,9 +277,6 @@ export default function PortalBillingPage() {
         onClose={() => setCheckoutOpen(false)}
         onComplete={async (payload) => {
           await runMockCheckout(payload);
-          if (payload.success) {
-            setCheckoutOpen(false);
-          }
         }}
       />
     </div>
