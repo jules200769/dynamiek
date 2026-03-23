@@ -69,21 +69,6 @@ export default function PortalProfilePage() {
 
     setSaving(true);
     setSaveError(null);
-    // #region agent log
-    fetch('http://127.0.0.1:7620/ingest/3700e228-2541-4bc9-8154-c88faffd3439', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '19c8fa' },
-      body: JSON.stringify({
-        sessionId: '19c8fa',
-        runId: 'profile-save',
-        hypothesisId: 'H400',
-        location: 'Profile.tsx:handleSave',
-        message: 'saveProfile attempt',
-        data: { hasDraft: true },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
     try {
       await saveProfile(draft);
       setEditing(false);
@@ -93,21 +78,6 @@ export default function PortalProfilePage() {
       const e = err as { message?: string; details?: string; hint?: string };
       const msg = e.details || e.message || e.hint || 'Opslaan mislukt. Probeer het opnieuw.';
       setSaveError(String(msg));
-      // #region agent log
-      fetch('http://127.0.0.1:7620/ingest/3700e228-2541-4bc9-8154-c88faffd3439', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '19c8fa' },
-        body: JSON.stringify({
-          sessionId: '19c8fa',
-          runId: 'profile-save',
-          hypothesisId: 'H400',
-          location: 'Profile.tsx:handleSave:catch',
-          message: 'saveProfile failed',
-          data: { errType: err?.constructor?.name },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
     } finally {
       setSaving(false);
     }

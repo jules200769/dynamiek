@@ -89,7 +89,7 @@ function OwnerShell() {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/login');
+    navigate('/hosts');
   };
 
   return (

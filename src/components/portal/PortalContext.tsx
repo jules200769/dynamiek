@@ -48,8 +48,14 @@ export function PortalProvider({ children }: { children: ReactNode }) {
       setError(null);
       const fresh = await portalService.loadData();
       setData(fresh);
-    } catch {
-      setError('Portaaldata kon niet worden geladen.');
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err);
+      console.error('PortalContext load failed:', detail);
+      const hint =
+        import.meta.env.DEV && detail
+          ? ` (${detail})`
+          : '';
+      setError(`Portaaldata kon niet worden geladen.${hint}`);
     } finally {
       setLoading(false);
     }

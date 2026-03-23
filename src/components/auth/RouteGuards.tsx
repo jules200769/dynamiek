@@ -2,6 +2,14 @@ import type { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/src/components/auth/AuthContext';
 
+function AuthLoadingScreen() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-primary" />
+    </div>
+  );
+}
+
 function GuardShell({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
@@ -11,7 +19,7 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   const location = useLocation();
 
   if (loading) {
-    return null;
+    return <AuthLoadingScreen />;
   }
 
   if (!user) {
@@ -26,7 +34,7 @@ export function RequireOwner({ children }: { children: ReactNode }) {
   const location = useLocation();
 
   if (loading) {
-    return null;
+    return <AuthLoadingScreen />;
   }
 
   if (!user) {

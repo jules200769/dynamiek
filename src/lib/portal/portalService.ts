@@ -43,21 +43,6 @@ export const portalService = {
       })
       .eq('id', studentId);
     if (error) {
-      // #region agent log
-      fetch('http://127.0.0.1:7620/ingest/3700e228-2541-4bc9-8154-c88faffd3439', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '19c8fa' },
-        body: JSON.stringify({
-          sessionId: '19c8fa',
-          runId: 'profile-save',
-          hypothesisId: 'H400',
-          location: 'portalService.ts:saveProfile:students',
-          message: 'students update error',
-          data: { code: error.code, details: error.details, hint: error.hint },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-      // #endregion
       throw error;
     }
 
@@ -144,11 +129,12 @@ export const portalService = {
     if (error) throw error;
     if (!data) throw new Error('Lesson create returned no data');
 
-    await supabase.from('sync_events').insert({
+    const { error: syncError } = await supabase.from('sync_events').insert({
       student_id: studentId,
       entity: 'lesson',
       action: 'create',
     });
+    if (syncError) console.warn('sync_events insert failed:', syncError.message);
 
     return {
       id: data.id,
@@ -184,11 +170,12 @@ export const portalService = {
       .eq('student_id', studentId);
     if (error) throw error;
 
-    await supabase.from('sync_events').insert({
+    const { error: syncError } = await supabase.from('sync_events').insert({
       student_id: studentId,
       entity: 'lesson',
       action: 'update',
     });
+    if (syncError) console.warn('sync_events insert failed:', syncError.message);
 
     const fresh = await loadPortalDataFromDb();
     return fresh.lessons;
@@ -215,6 +202,8 @@ export const portalService = {
         student_id: studentId,
         entity: 'lesson',
         action: 'update',
+      }).then(({ error: syncErr }) => {
+        if (syncErr) console.warn('sync_events insert failed:', syncErr.message);
       }),
     ]);
 
@@ -242,6 +231,8 @@ export const portalService = {
         student_id: studentId,
         entity: 'profile',
         action: 'update',
+      }).then(({ error: syncErr }) => {
+        if (syncErr) console.warn('sync_events insert failed:', syncErr.message);
       }),
     ]);
 
@@ -325,9 +316,7 @@ export const portalService = {
       const dueDate = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
       const invoiceNumber = `WEB-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}${String(
         now.getDate(),
-      ).padStart(2, '0')}-${Math.floor(Math.random() * 1000)
-        .toString()
-        .padStart(3, '0')}`;
+      ).padStart(2, '0')}-${crypto.randomUUID().slice(0, 8)}`;
       const period = `${now.toLocaleDateString('nl-NL', { month: 'short', year: 'numeric' })} extra aanschaf`;
 
       const invoiceStatus: InvoiceStatus = 'In behandeling';

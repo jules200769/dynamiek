@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Session, User } from '@supabase/supabase-js';
+import type { AuthError, Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/src/lib/supabase/client';
 import type { Database } from '@/src/lib/supabase/database.types';
 
@@ -20,6 +20,11 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+
+/** GoTrue returns 403 when the JWT `sub` no longer exists in auth.users (e.g. after DB reset). */
+function isStaleJwtUserError(error: AuthError | null | undefined): boolean {
+  return error?.status === 403 && (error.message?.includes('does not exist') ?? false);
+}
 
 async function fetchProfile(userId: string, retries = 0): Promise<Profile | null> {
   const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
@@ -71,6 +76,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false);
         return;
       }
+      if (!data.session) {
+        await applySession(null);
+        if (isMounted) setLoading(false);
+        return;
+      }
+      const gu = await supabase.auth.getUser();
+      if (gu.error && isStaleJwtUserError(gu.error)) {
+        await supabase.auth.signOut();
+        await applySession(null);
+        if (isMounted) setLoading(false);
+        return;
+      }
       await applySession(data.session);
       if (isMounted) setLoading(false);
     });
@@ -84,6 +101,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       void (async () => {
         if (!isMounted) return;
         setLoading(true);
+        if (!nextSession) {
+          await applySession(null);
+          if (isMounted) setLoading(false);
+          return;
+        }
+        const gu = await supabase.auth.getUser();
+        if (gu.error && isStaleJwtUserError(gu.error)) {
+          await supabase.auth.signOut();
+          await applySession(null);
+          if (isMounted) setLoading(false);
+          return;
+        }
         await applySession(nextSession);
         if (isMounted) setLoading(false);
       })();
@@ -103,13 +132,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return {};
   };
 
-  const signUp = async (email: string, password: string, role: Role = 'student') => {
+  const signUp = async (email: string, password: string, _role: Role = 'student') => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
-          role,
           full_name: email.split('@')[0],
         },
       },

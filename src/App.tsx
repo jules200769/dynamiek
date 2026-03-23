@@ -130,6 +130,7 @@ function AppRoutes() {
         <Route path="profiel" element={<PortalProfilePage />} />
         <Route path="voortgang" element={<PortalProgressPage />} />
         <Route path="berichten" element={<PortalMessagesPage />} />
+        <Route path="*" element={<Navigate to="/portaal" replace />} />
       </Route>
       <Route
         path="/owner"
@@ -148,6 +149,7 @@ function AppRoutes() {
         <Route path="facturatie" element={<OwnerBillingPage />} />
         <Route path="berichten" element={<OwnerMessagesPage />} />
         <Route path="calendar-sync" element={<OwnerCalendarSyncPage />} />
+        <Route path="*" element={<Navigate to="/owner" replace />} />
       </Route>
       {PublicRoutes()}
       <Route path="*" element={<Navigate to="/" replace />} />

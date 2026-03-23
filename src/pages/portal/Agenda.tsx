@@ -39,10 +39,13 @@ function BookLessonDialog({
   const handleConfirm = async () => {
     if (!selectedSlot) return;
     setSaving(true);
-    await onConfirm(selectedSlot, { preferredWindow, preferredLocation });
-    setSaving(false);
-    setStep(1);
-    onClose();
+    try {
+      await onConfirm(selectedSlot, { preferredWindow, preferredLocation });
+      setStep(1);
+      onClose();
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -213,9 +216,12 @@ function RescheduleLessonDialog({
                 onClick={async () => {
                   if (!selectedSlot) return;
                   setSaving(true);
-                  await onConfirm(selectedSlot);
-                  setSaving(false);
-                  onClose();
+                  try {
+                    await onConfirm(selectedSlot);
+                    onClose();
+                  } finally {
+                    setSaving(false);
+                  }
                 }}
                 className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-50"
               >
@@ -272,9 +278,12 @@ export default function PortalAgendaPage() {
     }
 
     setBusy(lesson.id);
-    await cancelLesson(lesson.id);
-    setBusy(null);
-    setAlert('Les geannuleerd.');
+    try {
+      await cancelLesson(lesson.id);
+      setAlert('Les geannuleerd.');
+    } finally {
+      setBusy(null);
+    }
   };
 
   const handleReschedule = (_lesson: Lesson) => {
@@ -442,12 +451,12 @@ export default function PortalAgendaPage() {
         slots={data.availability}
         onClose={() => setBookOpen(false)}
         onConfirm={async (slot, preferences) => {
+          await bookLesson(slot);
           await saveBookingPreferences({
             ...data.bookingPreferences,
             preferredLocation: preferences.preferredLocation,
             preferredTimeWindows: [preferences.preferredWindow],
           });
-          await bookLesson(slot);
           setAlert('Nieuwe les is ingepland.');
         }}
       />
@@ -459,9 +468,12 @@ export default function PortalAgendaPage() {
           onClose={() => setRescheduleOpen(false)}
           onConfirm={async (slot) => {
             setBusy(selectedLesson.id);
-            await rescheduleLesson(selectedLesson.id, slot);
-            setBusy(null);
-            setAlert('Les verplaatst naar het gekozen tijdslot.');
+            try {
+              await rescheduleLesson(selectedLesson.id, slot);
+              setAlert('Les verplaatst naar het gekozen tijdslot.');
+            } finally {
+              setBusy(null);
+            }
           }}
         />
       ) : null}

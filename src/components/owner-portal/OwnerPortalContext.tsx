@@ -82,6 +82,13 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
       'notifications',
       'payment_attempts',
     ];
+
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+    const debouncedReload = () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => void reload(), 500);
+    };
+
     let channel = supabase.channel('owner-live');
     tables.forEach((table) => {
       channel = channel.on(
@@ -91,13 +98,12 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
           schema: 'public',
           table,
         },
-        () => {
-          void reload();
-        },
+        debouncedReload,
       );
     });
     channel.subscribe();
     return () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
       void channel.unsubscribe();
     };
   }, [reload]);
