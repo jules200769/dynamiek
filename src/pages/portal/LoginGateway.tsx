@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/src/components/auth/AuthContext';
+import {
+  consumeSignupProfileRedirectHandled,
+  markSignupProfileRedirectHandled,
+  setPortalProfileSetupFlag,
+  takePortalProfileSetupFlag,
+} from '@/src/lib/portal/profileValidation';
 
 /**
  * Publieke inlog/aanmelding — alleen voor leerlingen (klantenportaal).
@@ -24,6 +30,14 @@ export default function LoginGateway() {
       navigate('/owner', { replace: true });
       return;
     }
+    if (consumeSignupProfileRedirectHandled()) {
+      return;
+    }
+    if (takePortalProfileSetupFlag()) {
+      markSignupProfileRedirectHandled();
+      navigate('/portaal/profiel', { replace: true, state: { fromSignup: true } });
+      return;
+    }
     const routeFromGuard = (location.state as { from?: string } | null)?.from;
     if (routeFromGuard && routeFromGuard.startsWith('/portaal')) {
       navigate(routeFromGuard, { replace: true });
@@ -39,6 +53,8 @@ export default function LoginGateway() {
       mode === 'signin' ? await signIn(email.trim(), password) : await signUp(email.trim(), password, 'student');
     if (result.error) {
       setError(result.error);
+    } else if (mode === 'signup') {
+      setPortalProfileSetupFlag();
     }
     setBusy(false);
   };

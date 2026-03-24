@@ -8,6 +8,7 @@ import type {
   StudentProfile,
 } from '@/src/types/portal';
 import { supabase } from '@/src/lib/supabase/client';
+import { normalizeDateForDb } from '@/src/lib/portal/format';
 import { getCurrentAuthUser, getCurrentStudentIdOrThrow, loadPortalDataFromDb } from '@/src/lib/portal/supabaseData';
 
 export const portalService = {
@@ -32,14 +33,14 @@ export const portalService = {
         address: profile.address,
         city: profile.city,
         postal_code: profile.postalCode,
-        date_of_birth: profile.dateOfBirth?.trim() ? profile.dateOfBirth : null,
+        date_of_birth: normalizeDateForDb(profile.dateOfBirth ?? ''),
         phone: profile.phone,
         email: profile.email,
         cbr_number: profile.cbrNumber,
         theory_certificate_number: profile.theoryCertificateNumber,
         health_declaration_status: healthDeclarationStatus,
         license_category: profile.licenseCategory,
-        training_start_date: profile.trainingStartDate?.trim() ? profile.trainingStartDate : null,
+        training_start_date: normalizeDateForDb(profile.trainingStartDate ?? ''),
       })
       .eq('id', studentId);
     if (error) {
@@ -56,7 +57,11 @@ export const portalService = {
       .eq('id', authUser.id);
     if (profileError) throw profileError;
 
-    return profile;
+    return {
+      ...profile,
+      dateOfBirth: normalizeDateForDb(profile.dateOfBirth ?? '') ?? '',
+      trainingStartDate: normalizeDateForDb(profile.trainingStartDate ?? '') ?? '',
+    };
   },
 
   async saveReminderSettings(settings: ReminderSettings) {

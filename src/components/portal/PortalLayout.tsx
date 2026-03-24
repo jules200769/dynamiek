@@ -1,9 +1,10 @@
 import { Bell, LogOut, MoreHorizontal } from 'lucide-react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { PortalProvider, usePortal } from './PortalContext';
 import { portalNavItems } from './portalNav';
 import { useAuth } from '@/src/components/auth/AuthContext';
+import { isProfileComplete } from '@/src/lib/portal/profileValidation';
 
 function crumbsFromPath(pathname: string) {
   const parts = pathname.split('/').filter(Boolean);
@@ -83,9 +84,13 @@ function PortalShell() {
   const navigate = useNavigate();
   const { signOut } = useAuth();
   const location = useLocation();
-  const { data, markNotificationRead } = usePortal();
+  const { data, loading, markNotificationRead } = usePortal();
   const unreadCount = data?.notifications.filter((item) => !item.read).length ?? 0;
   const crumbs = useMemo(() => crumbsFromPath(location.pathname), [location.pathname]);
+
+  if (!loading && data && !isProfileComplete(data.profile) && location.pathname !== '/portaal/profiel') {
+    return <Navigate to="/portaal/profiel" replace />;
+  }
 
   const handleOpenNotifications = async () => {
     const unreadNotifications = data?.notifications.filter((item) => !item.read) ?? [];
