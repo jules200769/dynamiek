@@ -6,7 +6,11 @@ const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY?.trim() ?? '';
 
 function validateEnv(): string | null {
   if (!supabaseUrl || !supabaseAnonKey)
-    return 'Missing Supabase env vars: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set at build time.';
+    return [
+      'Missing Supabase env vars: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set before `npm run build`.',
+      'Vercel: Project → Settings → Environment Variables → add both for Production (and Preview if you use it) → Redeploy.',
+      'Values: Supabase Dashboard → Project Settings → API (Project URL + anon public key).',
+    ].join(' ');
   try {
     const u = new URL(supabaseUrl);
     if (u.protocol !== 'https:') return 'VITE_SUPABASE_URL must use https.';

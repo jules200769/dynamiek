@@ -6,6 +6,10 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
+    build: {
+      // Default is 500 kB; large vendor chunks (React, motion, etc.) often exceed that.
+      chunkSizeWarningLimit: 1200,
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
