@@ -9,7 +9,6 @@ import type {
   Message,
   PaymentMethod,
   PortalData,
-  PortalScenario,
   ReminderSettings,
   StudentDocument,
   StudentProfile,
@@ -19,7 +18,7 @@ type PortalContextValue = {
   data: PortalData | null;
   loading: boolean;
   error: string | null;
-  reload: (scenario?: PortalScenario) => Promise<void>;
+  reload: () => Promise<void>;
   saveProfile: (profile: StudentProfile) => Promise<void>;
   saveReminderSettings: (settings: ReminderSettings) => Promise<void>;
   saveBookingPreferences: (preferences: PortalData['bookingPreferences']) => Promise<void>;
@@ -31,7 +30,7 @@ type PortalContextValue = {
   setThreadUnread: (threadId: string, unread: boolean) => Promise<void>;
   toggleThreadPinned: (threadId: string, pinned: boolean) => Promise<void>;
   markNotificationRead: (notificationId: string, read: boolean) => Promise<void>;
-  runMockCheckout: (input: { productId: string; label: string; amount: number; paymentMethod: PaymentMethod; success: boolean }) => Promise<void>;
+  runCheckout: (input: { productId: string; label: string; amount: number; paymentMethod: PaymentMethod; success: boolean }) => Promise<void>;
   setLessonsLocal: (updater: (lessons: Lesson[]) => Lesson[]) => void;
 };
 
@@ -42,7 +41,7 @@ export function PortalProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const reload = useCallback(async (_scenario: PortalScenario = 'normal') => {
+  const reload = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -209,20 +208,20 @@ export function PortalProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const runMockCheckout = async (input: {
+  const runCheckout = async (input: {
     productId: string;
     label: string;
     amount: number;
     paymentMethod: PaymentMethod;
     success: boolean;
   }) => {
-    const attempt = await portalService.startMockCheckout({
+    const attempt = await portalService.startCheckout({
       productId: input.productId,
       label: input.label,
       amount: input.amount,
       paymentMethod: input.paymentMethod,
     });
-    await portalService.finalizeMockCheckout(attempt.id, input.success);
+    await portalService.finalizeCheckout(attempt.id, input.success);
     await reload();
   };
 
@@ -247,7 +246,7 @@ export function PortalProvider({ children }: { children: ReactNode }) {
       setThreadUnread,
       toggleThreadPinned,
       markNotificationRead,
-      runMockCheckout,
+      runCheckout,
       setLessonsLocal,
     }),
     [data, loading, error, reload],

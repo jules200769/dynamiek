@@ -40,6 +40,7 @@ export type Database = {
           license_category: 'B' | 'BE' | 'A' | 'AM';
           training_start_date: string | null;
           internal_note: string | null;
+          instructor_advice: string;
           updated_at: string;
           version: number;
         };

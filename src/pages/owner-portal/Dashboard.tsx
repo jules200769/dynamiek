@@ -69,7 +69,7 @@ export default function OwnerDashboardPage() {
           </div>
         </SectionCard>
 
-        <SectionCard title="Kalendersync status" subtitle="Google Calendar integratie (mock)">
+        <SectionCard title="Kalendersync status" subtitle="Google Calendar-koppeling (status uit database)">
           <div className="space-y-2 text-sm text-slate-700">
             <p>Status: <span className="font-semibold">{data.calendarSync.status}</span></p>
             <p>Agenda: <span className="font-semibold">{data.calendarSync.externalCalendarName}</span></p>

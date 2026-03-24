@@ -67,7 +67,12 @@ export default function OwnerProgressPage() {
   }
 
   const readiness = getReadinessScore(student.checklist, student.progress);
-  const isExamReady = readiness >= 75 && student.checklist.length > 0 && student.checklist.every((item) => item.status !== 'Blokkerend');
+  const isExamReady =
+    readiness !== null &&
+    readiness >= 75 &&
+    student.checklist.length > 0 &&
+    student.checklist.every((item) => item.status !== 'Blokkerend');
+  const hasExamData = student.checklist.length > 0 || student.progress.length > 0;
 
   return (
     <div className="space-y-4">
@@ -108,19 +113,29 @@ export default function OwnerProgressPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Examengereedheid (indicatie)</p>
-            <p className="mt-1 text-xl font-black text-slate-900">{isExamReady ? 'Ja, bijna klaar' : 'Nog niet klaar'}</p>
+            <p className="mt-1 text-xl font-black text-slate-900">
+              {!hasExamData ? 'Nog niet bepaald' : isExamReady ? 'Ja, bijna klaar' : 'Nog niet klaar'}
+            </p>
           </div>
-          <StatusBadge value={isExamReady ? 'Voltooid' : 'In behandeling'} />
+          <StatusBadge value={!hasExamData ? 'In behandeling' : isExamReady ? 'Voltooid' : 'In behandeling'} />
         </div>
-        <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-100">
-          <div className="h-full rounded-full bg-primary transition-[width]" style={{ width: `${readiness}%` }} />
-        </div>
-        <p className="mt-2 text-sm text-slate-600">
-          Score: <span className="font-semibold text-slate-900">{readiness}%</span>
-          {student.progress.length === 0 || student.checklist.length === 0 ? (
-            <span className="text-slate-500"> — vul vaardigheden en checklist in voor een betrouwbare indicatie.</span>
-          ) : null}
-        </p>
+        {readiness === null ? (
+          <p className="mt-4 text-sm text-slate-600">
+            Voeg hieronder vaardigheden en checklistpunten toe om een percentage te berekenen.
+          </p>
+        ) : (
+          <>
+            <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-100">
+              <div className="h-full rounded-full bg-primary transition-[width]" style={{ width: `${readiness}%` }} />
+            </div>
+            <p className="mt-2 text-sm text-slate-600">
+              Score: <span className="font-semibold text-slate-900">{readiness}%</span>
+              {student.progress.length === 0 || student.checklist.length === 0 ? (
+                <span className="text-slate-500"> — vul beide onderdelen in voor een betrouwbare indicatie.</span>
+              ) : null}
+            </p>
+          </>
+        )}
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">

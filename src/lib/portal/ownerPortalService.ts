@@ -86,6 +86,19 @@ export const ownerPortalService = {
     return loadOwnerPortalDataFromDb();
   },
 
+  async setInstructorAdvice(studentId: string, advice: string) {
+    const { error } = await supabase.from('students').update({ instructor_advice: advice.trim() }).eq('id', studentId);
+    if (error) throw error;
+
+    await supabase.from('sync_events').insert({
+      student_id: studentId,
+      entity: 'profile',
+      action: 'update',
+    });
+
+    return loadOwnerPortalDataFromDb();
+  },
+
   async createProgressItem(
     studentId: string,
     skill: string,

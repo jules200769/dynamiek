@@ -77,7 +77,7 @@ function CheckoutDialog({
         {submitState === 'error' ? (
           <div className="space-y-3 rounded-xl border border-rose-200 bg-rose-50 p-4">
             <p className="text-sm font-semibold text-rose-800">Betaling mislukt</p>
-            <p className="text-sm text-rose-700">Er ging iets mis in de demo-checkout. Probeer opnieuw.</p>
+            <p className="text-sm text-rose-700">De betaling kon niet worden afgerond. Probeer het opnieuw.</p>
             <button type="button" onClick={() => setSubmitState('idle')} className="rounded-xl bg-rose-600 px-3 py-2 text-sm font-semibold text-white">
               Opnieuw proberen
             </button>
@@ -156,7 +156,7 @@ function CheckoutDialog({
 }
 
 export default function PortalBillingPage() {
-  const { data, loading, error, runMockCheckout } = usePortal();
+  const { data, loading, error, runCheckout } = usePortal();
   const [filter, setFilter] = useState<InvoiceStatus | 'Alles'>('Alles');
   const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -189,7 +189,7 @@ export default function PortalBillingPage() {
     <div className="space-y-4">
       <PageHeader
         title="Betalingen en pakketten"
-        description="Volg je pakket, open saldo en facturen. Vraag extra lessen aan in een demo-checkout."
+        description="Volg je pakket, open saldo en facturen. Vraag extra lessen of pakketten aan; betalingen worden vastgelegd in je overzicht."
         actions={
           <button
             type="button"
@@ -276,7 +276,7 @@ export default function PortalBillingPage() {
         open={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
         onComplete={async (payload) => {
-          await runMockCheckout(payload);
+          await runCheckout(payload);
         }}
       />
     </div>

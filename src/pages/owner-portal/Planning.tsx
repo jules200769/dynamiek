@@ -57,7 +57,7 @@ export default function OwnerPlanningPage() {
         <>
           <SectionCard
             title="Beschikbare slots"
-            subtitle="Snelle actie voor inplannen (mock)"
+            subtitle="Gebruikt het eerste beschikbare slot om direct een les in te plannen"
             actions={
               <button
                 type="button"

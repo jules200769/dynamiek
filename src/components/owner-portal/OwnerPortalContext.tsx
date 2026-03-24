@@ -5,7 +5,6 @@ import { supabase } from '@/src/lib/supabase/client';
 import type {
   NewPlannedLessonInput,
   OwnerPortalData,
-  OwnerPortalScenario,
   OwnerStudentRecord,
   UpdateInvoiceStatusInput,
   UpdateLessonStatusInput,
@@ -18,12 +17,13 @@ type OwnerPortalContextValue = {
   error: string | null;
   actionError: string | null;
   clearActionError: () => void;
-  reload: (scenario?: OwnerPortalScenario) => Promise<void>;
+  reload: () => Promise<void>;
   findStudentById: (studentId: string) => OwnerStudentRecord | null;
   scheduleLesson: (input: NewPlannedLessonInput) => Promise<void>;
   updateLessonStatus: (input: UpdateLessonStatusInput) => Promise<void>;
   updateInvoiceStatus: (input: UpdateInvoiceStatusInput) => Promise<void>;
   setInternalNote: (studentId: string, note: string) => Promise<void>;
+  setInstructorAdvice: (studentId: string, advice: string) => Promise<void>;
   sendOwnerMessage: (threadId: string, studentId: string, body: string) => Promise<void>;
   createProgressItem: (
     studentId: string,
@@ -46,7 +46,7 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const reload = useCallback(async (_scenario: OwnerPortalScenario = 'normal') => {
+  const reload = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -148,6 +148,16 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const setInstructorAdvice = async (studentId: string, advice: string) => {
+    try {
+      setActionError(null);
+      const updated = await ownerPortalService.setInstructorAdvice(studentId, advice);
+      setData(updated);
+    } catch (err) {
+      setActionError(`Advies opslaan mislukt: ${err instanceof Error ? err.message : 'Onbekende fout'}`);
+    }
+  };
+
   const createProgressItem = async (
     studentId: string,
     skill: string,
@@ -229,6 +239,7 @@ export function OwnerPortalProvider({ children }: { children: ReactNode }) {
       clearActionError,
       reload,
       findStudentById,
+      setInstructorAdvice,
       scheduleLesson,
       updateLessonStatus,
       updateInvoiceStatus,

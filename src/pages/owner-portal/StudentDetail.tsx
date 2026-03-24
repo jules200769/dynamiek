@@ -10,16 +10,24 @@ import { formatDate, formatDateTime, formatMinutes } from '@/src/lib/portal/form
 
 export default function OwnerStudentDetailPage() {
   const { studentId } = useParams<{ studentId: string }>();
-  const { loading, data, findStudentById, setInternalNote } = useOwnerPortal();
+  const { loading, data, findStudentById, setInternalNote, setInstructorAdvice } = useOwnerPortal();
   const student = studentId ? findStudentById(studentId) : null;
   const [note, setNote] = useState(student?.internalNote ?? '');
-  const isDirty = useRef(false);
+  const [advice, setAdvice] = useState(student?.instructorAdvice ?? '');
+  const isNoteDirty = useRef(false);
+  const isAdviceDirty = useRef(false);
 
   useEffect(() => {
-    if (!isDirty.current) {
+    if (!isNoteDirty.current) {
       setNote(student?.internalNote ?? '');
     }
   }, [student?.internalNote]);
+
+  useEffect(() => {
+    if (!isAdviceDirty.current) {
+      setAdvice(student?.instructorAdvice ?? '');
+    }
+  }, [student?.instructorAdvice]);
 
   if (loading) {
     return (
@@ -93,12 +101,38 @@ export default function OwnerStudentDetailPage() {
         </SectionCard>
       </div>
 
-      <SectionCard title="Interne owner-notitie" subtitle="Wordt later gesynchroniseerd met backend event-log">
+      <SectionCard title="Advies voor leerlingportaal" subtitle="Zichtbaar op dashboard en voortgang in het klantenportaal">
+        <div className="space-y-2">
+          <textarea
+            value={advice}
+            onChange={(event) => {
+              isAdviceDirty.current = true;
+              setAdvice(event.target.value);
+            }}
+            rows={3}
+            placeholder="Bijv. focus deze week op invoegen en kijken..."
+            className="w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-700"
+          />
+          <button
+            type="button"
+            onClick={() => {
+              void setInstructorAdvice(student.id, advice).then(() => {
+                isAdviceDirty.current = false;
+              });
+            }}
+            className="rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-white hover:bg-primary-dark"
+          >
+            Advies opslaan
+          </button>
+        </div>
+      </SectionCard>
+
+      <SectionCard title="Interne owner-notitie" subtitle="Alleen zichtbaar in dit portaal">
         <div className="space-y-2">
           <textarea
             value={note}
             onChange={(event) => {
-              isDirty.current = true;
+              isNoteDirty.current = true;
               setNote(event.target.value);
             }}
             rows={3}
@@ -108,7 +142,7 @@ export default function OwnerStudentDetailPage() {
             type="button"
             onClick={() => {
               void setInternalNote(student.id, note).then(() => {
-                isDirty.current = false;
+                isNoteDirty.current = false;
               });
             }}
             className="rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-white hover:bg-primary-dark"

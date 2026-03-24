@@ -27,6 +27,8 @@ export type OwnerStudentRecord = {
   documents: StudentDocument[];
   messageThreads: MessageThread[];
   internalNote?: string;
+  /** Shown in the student portal (dashboard / progress). */
+  instructorAdvice: string;
   updatedAt: string;
   version: number;
 };
@@ -64,8 +66,6 @@ export type OwnerPortalData = {
   alerts: SchoolAlert[];
   syncEvents: SyncEvent[];
 };
-
-export type OwnerPortalScenario = 'normal' | 'drukke-week' | 'betalingsachterstand';
 
 export type OwnerDashboardStats = {
   totalStudents: number;

@@ -31,15 +31,18 @@ export function getUpcomingLessons(lessons: Lesson[]): Lesson[] {
     .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 }
 
-export function getReadinessScore(checklist: ChecklistItem[], progress: ProgressItem[]): number {
+/** `null` = nog geen checklist én geen voortgang geregistreerd (geen percentage tonen). */
+export function getReadinessScore(checklist: ChecklistItem[], progress: ProgressItem[]): number | null {
+  if (checklist.length === 0 && progress.length === 0) return null;
   if (checklist.length === 0 || progress.length === 0) return 0;
   const doneChecklist = checklist.filter((item) => item.status === 'Voltooid').length / checklist.length;
-  const levelScore = progress.reduce((sum, item) => {
-    if (item.level === 'Examenklaar') return sum + 1;
-    if (item.level === 'Goed') return sum + 0.8;
-    if (item.level === 'Voldoende') return sum + 0.6;
-    return sum + 0.3;
-  }, 0) / progress.length;
+  const levelScore =
+    progress.reduce((sum, item) => {
+      if (item.level === 'Examenklaar') return sum + 1;
+      if (item.level === 'Goed') return sum + 0.8;
+      if (item.level === 'Voldoende') return sum + 0.6;
+      return sum + 0.3;
+    }, 0) / progress.length;
 
-  return Math.round(((doneChecklist * 0.55 + levelScore * 0.45) * 100));
+  return Math.round((doneChecklist * 0.55 + levelScore * 0.45) * 100);
 }

@@ -63,28 +63,7 @@ where not exists (
   select 1 from public.invoices i where i.student_id = s.id
 );
 
-insert into public.progress_items (student_id, skill, level, trend, note)
-select
-  s.id,
-  'Kijktechniek',
-  'Voldoende',
-  'stijgend',
-  'Goede ontwikkeling op scan- en spiegeltechniek.'
-from public.students s
-where not exists (
-  select 1 from public.progress_items p where p.student_id = s.id
-);
-
-insert into public.checklist_items (student_id, requirement, status, advice)
-select
-  s.id,
-  'Theoriecertificaat geverifieerd',
-  'In behandeling',
-  'Upload certificaat in portaal om af te ronden.'
-from public.students s
-where not exists (
-  select 1 from public.checklist_items c where c.student_id = s.id
-);
+-- Voortgang en checklist: niet seeden; owner voegt competenties toe via owner-portaal.
 
 insert into public.message_threads (student_id, subject, type, priority, unread_count, pinned)
 select

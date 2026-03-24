@@ -147,8 +147,6 @@ export type BookingPreferences = {
   waitlistEnabled: boolean;
 };
 
-export type PortalScenario = 'normal' | 'drukke-week' | 'betalingsachterstand';
-
 export type PortalData = {
   profile: StudentProfile;
   documents: StudentDocument[];

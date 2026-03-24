@@ -279,7 +279,7 @@ export const portalService = {
     if (error) throw error;
   },
 
-  async startMockCheckout(input: {
+  async startCheckout(input: {
     productId: string;
     label: string;
     amount: number;
@@ -303,7 +303,7 @@ export const portalService = {
     return { id: data.id, amount: Number(data.amount) };
   },
 
-  async finalizeMockCheckout(attemptId: string, succeeded: boolean) {
+  async finalizeCheckout(attemptId: string, succeeded: boolean) {
     const studentId = await getCurrentStudentIdOrThrow();
     const status = succeeded ? 'succeeded' : 'failed';
     const { data: updatedAttempt, error } = await supabase

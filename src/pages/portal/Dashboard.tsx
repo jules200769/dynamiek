@@ -101,13 +101,25 @@ export default function PortalDashboardPage() {
 
         <SectionCard title="Examengereedheid" subtitle="Indicatie op basis van checklist en voortgang">
           <div className="space-y-3">
-            <div className="h-3 overflow-hidden rounded-full bg-slate-100">
-              <div className="h-full rounded-full bg-primary" style={{ width: `${readiness}%` }} />
-            </div>
-            <p className="text-sm text-slate-700">
-              <span className="font-bold text-slate-900">{readiness}%</span> van je examendoelen behaald.
+            {readiness === null ? (
+              <p className="text-sm text-slate-600">
+                Nog geen voortgang en checklist ingevuld door je rijschool. Zodra die er is, zie je hier een indicatie.
+              </p>
+            ) : (
+              <>
+                <div className="h-3 overflow-hidden rounded-full bg-slate-100">
+                  <div className="h-full rounded-full bg-primary" style={{ width: `${readiness}%` }} />
+                </div>
+                <p className="text-sm text-slate-700">
+                  <span className="font-bold text-slate-900">{readiness}%</span> van je examendoelen behaald.
+                </p>
+              </>
+            )}
+            <p className="text-sm text-slate-600">
+              {data.instructorAdvice.trim()
+                ? data.instructorAdvice
+                : 'Je instructeur heeft hier nog geen persoonlijk advies geplaatst.'}
             </p>
-            <p className="text-sm text-slate-600">{data.instructorAdvice}</p>
             <Link to="/portaal/voortgang" className="text-sm font-semibold text-primary">
               Bekijk volledige opleidingskaart
             </Link>

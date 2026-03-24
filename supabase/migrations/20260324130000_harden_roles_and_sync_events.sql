@@ -53,26 +53,67 @@ create trigger protect_profile_role_trg
   for each row execute function public.protect_profile_role();
 
 -- P0-2: Allow students to insert their own sync_events (audit log).
+drop policy if exists "sync_event_student_insert" on public.sync_events;
 create policy "sync_event_student_insert" on public.sync_events
   for insert
   with check (student_id = public.current_student_id());
 
 -- P3: Enable Supabase Realtime for tables that PortalContext / OwnerPortalContext subscribe to.
-alter publication supabase_realtime add table public.students;
-alter publication supabase_realtime add table public.package_infos;
-alter publication supabase_realtime add table public.lessons;
-alter publication supabase_realtime add table public.availability_slots;
-alter publication supabase_realtime add table public.documents;
-alter publication supabase_realtime add table public.invoices;
-alter publication supabase_realtime add table public.progress_items;
-alter publication supabase_realtime add table public.checklist_items;
-alter publication supabase_realtime add table public.message_threads;
-alter publication supabase_realtime add table public.messages;
-alter publication supabase_realtime add table public.notifications;
-alter publication supabase_realtime add table public.reminder_settings;
-alter publication supabase_realtime add table public.booking_preferences;
-alter publication supabase_realtime add table public.payment_attempts;
-alter publication supabase_realtime add table public.sync_events;
-alter publication supabase_realtime add table public.school_settings;
-alter publication supabase_realtime add table public.calendar_sync_state;
-alter publication supabase_realtime add table public.school_alerts;
+-- Idempotent: skip if table is already in the publication.
+do $pub$
+begin
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'students') then
+    alter publication supabase_realtime add table public.students;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'package_infos') then
+    alter publication supabase_realtime add table public.package_infos;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'lessons') then
+    alter publication supabase_realtime add table public.lessons;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'availability_slots') then
+    alter publication supabase_realtime add table public.availability_slots;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'documents') then
+    alter publication supabase_realtime add table public.documents;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'invoices') then
+    alter publication supabase_realtime add table public.invoices;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'progress_items') then
+    alter publication supabase_realtime add table public.progress_items;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'checklist_items') then
+    alter publication supabase_realtime add table public.checklist_items;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'message_threads') then
+    alter publication supabase_realtime add table public.message_threads;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'messages') then
+    alter publication supabase_realtime add table public.messages;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'notifications') then
+    alter publication supabase_realtime add table public.notifications;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'reminder_settings') then
+    alter publication supabase_realtime add table public.reminder_settings;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'booking_preferences') then
+    alter publication supabase_realtime add table public.booking_preferences;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'payment_attempts') then
+    alter publication supabase_realtime add table public.payment_attempts;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'sync_events') then
+    alter publication supabase_realtime add table public.sync_events;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'school_settings') then
+    alter publication supabase_realtime add table public.school_settings;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'calendar_sync_state') then
+    alter publication supabase_realtime add table public.calendar_sync_state;
+  end if;
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'school_alerts') then
+    alter publication supabase_realtime add table public.school_alerts;
+  end if;
+end $pub$;

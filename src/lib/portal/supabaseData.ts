@@ -284,7 +284,7 @@ export async function loadPortalDataFromDb(): Promise<PortalData> {
     invoices: (((invoicesRes.data as Tables['invoices']['Row'][] | null) ?? []).map(toInvoice)),
     progress: (((progressRes.data as Tables['progress_items']['Row'][] | null) ?? []).map(toProgress)),
     checklist: (((checklistRes.data as Tables['checklist_items']['Row'][] | null) ?? []).map(toChecklist)),
-    instructorAdvice: 'Volgende stap: blijf consequent 2 lessen per week plannen voor stabiele voortgang.',
+    instructorAdvice: (student.instructor_advice ?? '').trim(),
     messageThreads: (((threadsRes.data as Tables['message_threads']['Row'][] | null) ?? []).map((thread) =>
       toMessageThread(thread, rawMessages),
     )),
@@ -416,6 +416,7 @@ export async function loadOwnerPortalDataFromDb(): Promise<OwnerPortalData> {
       documents: (documentsByStudent[student.id] ?? []).map(toDocument),
       messageThreads: studentThreads,
       internalNote: student.internal_note ?? undefined,
+      instructorAdvice: (student.instructor_advice ?? '').trim(),
       updatedAt: student.updated_at,
       version: student.version,
     };

@@ -25,7 +25,7 @@ export default function OwnerCalendarSyncPage() {
     <div className="space-y-4">
       <PageHeader
         title="Google Calendar sync"
-        description="Placeholder flow voor latere OAuth/database integratie."
+        description="Status komt uit de database. Start sync registreert een update en leegt openstaande items."
         actions={
           <button
             type="button"
@@ -47,7 +47,7 @@ export default function OwnerCalendarSyncPage() {
         </div>
       </SectionCard>
 
-      <SectionCard title="Sync event-log (mock)">
+      <SectionCard title="Sync event-log">
         <div className="space-y-2">
           {data.syncEvents.slice(0, 8).map((event) => (
             <div key={event.id} className="rounded-lg border border-slate-200 p-2 text-xs text-slate-700">
