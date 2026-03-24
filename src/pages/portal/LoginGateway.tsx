@@ -35,7 +35,7 @@ export default function LoginGateway() {
     }
     if (takePortalProfileSetupFlag()) {
       markSignupProfileRedirectHandled();
-      navigate('/portaal/profiel', { replace: true, state: { fromSignup: true } });
+      navigate('/portaal', { replace: true, state: { fromSignup: true } });
       return;
     }
     const routeFromGuard = (location.state as { from?: string } | null)?.from;
